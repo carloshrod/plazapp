@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { getOneAdminUser } from '../../services/userServices';
 import useUsersContext from '../../hooks/useUsersContext';
 import { MdAdminPanelSettings } from 'react-icons/md';
+import PlazasGrid from '../../components/PlazasGrid';
+import useGlobalContext from '../../hooks/useGlobalContext';
 
-const AdminDashboard = () => {
+const PlazasDashboard = () => {
 	const { id } = useParams();
+	const { showModal } = useGlobalContext();
 	const { userAdmin, setUserAdmin } = useUsersContext();
 
 	const fetchUsers = async () => {
@@ -18,16 +20,21 @@ const AdminDashboard = () => {
 		fetchUsers();
 	}, [id]);
 
+	const handleAddPlaza = () => {
+		showModal({
+			title: 'Agregar plazas',
+			children: null,
+		});
+	};
+
 	return (
-		<>
-			<h4 className='d-flex align-items-center px-4 m-4 text-primary fw-bold'>
+		<section className='px-4 py-2 text-primary'>
+			<h4 className='d-flex align-items-center px-3 mb-3 fw-bold'>
 				<MdAdminPanelSettings size={30} /> {userAdmin.name}
 			</h4>
-			<Container>
-				<h2>Locales</h2>
-			</Container>
-		</>
+			<PlazasGrid data={[]} onClick={handleAddPlaza} />
+		</section>
 	);
 };
 
-export default AdminDashboard;
+export default PlazasDashboard;
