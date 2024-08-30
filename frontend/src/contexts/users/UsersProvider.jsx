@@ -19,7 +19,16 @@ const UsersProvider = ({ children }) => {
 		fetchUserAdmins();
 	}, []);
 
-	const data = { userAdmins, setUserAdmins, userAdmin, setUserAdmin };
+	const dispatchUserAdmins = newUserAdmin => {
+		setUserAdmins([...userAdmins, newUserAdmin]);
+	};
+
+	const data = {
+		userAdmins,
+		dispatchUserAdmins,
+		userAdmin,
+		setUserAdmin,
+	};
 
 	return <UsersContext.Provider value={data}>{children}</UsersContext.Provider>;
 };

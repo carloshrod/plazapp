@@ -13,7 +13,7 @@ const UserForm = () => {
 	const [form, setForm] = useState(initialForm);
 	const [loading, setLoading] = useState(false);
 	const { hideModal } = useGlobalContext();
-	const { userAdmins, setUserAdmins } = useUsersContext();
+	const { dispatchUserAdmins } = useUsersContext();
 
 	const INPUTS = [
 		{
@@ -41,9 +41,9 @@ const UserForm = () => {
 		try {
 			setLoading(true);
 			const createdUser = await addUser(form);
+			dispatchUserAdmins(createdUser);
 			console.log('Usuario agregado con éxito!');
 			hideModal();
-			setUserAdmins([...userAdmins, createdUser]);
 		} catch (error) {
 			console.error(error);
 		} finally {
