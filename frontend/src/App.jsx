@@ -5,7 +5,7 @@ import {
 	Navigate,
 } from 'react-router-dom';
 import AuthProvider from './contexts/auth/AuthProvider';
-import GlobalProvider from './contexts/global/GlobalProvider';
+import UiProvider from './contexts/ui/UiProvider';
 import { PublicRoutes, PrivateRoutes } from './components';
 import { Login, MainDashboard, PlazasDashboard } from './pages';
 import { PATHS } from './utils/paths';
@@ -16,7 +16,7 @@ const { HOME, LOGIN, ADMIN, PLAZAS } = PATHS;
 
 function App() {
 	return (
-		<GlobalProvider>
+		<UiProvider>
 			<AuthProvider>
 				<Router>
 					<Routes>
@@ -31,7 +31,7 @@ function App() {
 					</Routes>
 				</Router>
 			</AuthProvider>
-		</GlobalProvider>
+		</UiProvider>
 	);
 }
 

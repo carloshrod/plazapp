@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import GlobalContext from './GlobalContext';
+import UiContext from './UiContext';
 
 const initialModal = {
 	isOpen: false,
@@ -7,7 +7,7 @@ const initialModal = {
 	children: null,
 };
 
-const GlobalProvider = ({ children }) => {
+const UiProvider = ({ children }) => {
 	const [modal, setModal] = useState(initialModal);
 
 	const showModal = ({ title, children }) => {
@@ -24,9 +24,7 @@ const GlobalProvider = ({ children }) => {
 
 	const data = { modal, showModal, hideModal };
 
-	return (
-		<GlobalContext.Provider value={data}>{children}</GlobalContext.Provider>
-	);
+	return <UiContext.Provider value={data}>{children}</UiContext.Provider>;
 };
 
-export default GlobalProvider;
+export default UiProvider;
