@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { signIn } from '../services/authService';
 import { addUser } from '../services/userServices';
-import useGlobalContext from './useGlobalContext';
+import useUiContext from './useUiContext';
+import { addPlaza } from '../services/plazasService';
+import { useParams } from 'react-router-dom';
 
 const useForm = initialForm => {
 	const [form, setForm] = useState(initialForm);
 	const [loading, setLoading] = useState(false);
-	const { hideModal } = useGlobalContext();
+	const { hideModal } = useUiContext();
+	const { adminId } = useParams();
 
-	const handleChange = e => {
-		const { value, name } = e.target;
+	const handleChange = event => {
+		const { value, name } = event.target;
 		setForm({
 			...form,
 			[name]: value,
@@ -42,7 +45,28 @@ const useForm = initialForm => {
 		}
 	};
 
-	return { form, loading, handleChange, handleSubmitLogin, handleSubmitUser };
+	const handleSubmitPlaza = async () => {
+		try {
+			setLoading(true);
+			const createdPlaza = await addPlaza(form, adminId);
+			console.log('Plaza agregada con éxito!');
+			hideModal();
+			return createdPlaza;
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	return {
+		form,
+		loading,
+		handleChange,
+		handleSubmitLogin,
+		handleSubmitUser,
+		handleSubmitPlaza,
+	};
 };
 
 export default useForm;

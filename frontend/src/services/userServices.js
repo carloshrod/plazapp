@@ -39,10 +39,10 @@ export const addUser = async user => {
 	}
 };
 
-export const getAdminUsers = async ref => {
+export const getAdminUsers = async () => {
 	try {
 		const q = query(
-			ref,
+			usersCollectionRef,
 			orderBy('createdAt', 'asc'),
 			where('role', '==', 'admin')
 		);

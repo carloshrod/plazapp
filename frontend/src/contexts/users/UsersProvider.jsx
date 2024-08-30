@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import UsersContext from './UsersContext';
-import { collection } from 'firebase/firestore';
-import { db } from '../../config/firebase';
 import { getAdminUsers } from '../../services/userServices';
-
-const usersCollectionRef = collection(db, 'users');
 
 const UsersProvider = ({ children }) => {
 	const [userAdmins, setUserAdmins] = useState([]);
 	const [userAdmin, setUserAdmin] = useState({});
 
 	const fetchUserAdmins = async () => {
-		const res = await getAdminUsers(usersCollectionRef);
+		const res = await getAdminUsers();
 		setUserAdmins(res);
 	};
 

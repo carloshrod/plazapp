@@ -7,7 +7,11 @@ const PlazasProvider = ({ children }) => {
 	const [stores, setStores] = useState([]);
 	const [store, setStore] = useState({});
 
-	const data = { plazas, plaza, stores, store };
+	const dispatchPlazas = newPlaza => {
+		setPlazas([...plazas, newPlaza]);
+	};
+
+	const data = { plazas, setPlazas, plaza, stores, store, dispatchPlazas };
 
 	return (
 		<PlazasContext.Provider value={data}>{children}</PlazasContext.Provider>

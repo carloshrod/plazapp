@@ -1,29 +1,38 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getOneAdminUser } from '../../services/userServices';
-import useUsersContext from '../../hooks/useUsersContext';
 import { MdAdminPanelSettings } from 'react-icons/md';
-import PlazasGrid from '../../components/PlazasGrid';
-import useGlobalContext from '../../hooks/useGlobalContext';
+import { PlazasForm, PlazasGrid } from '../../components';
+import useUsersContext from '../../hooks/useUsersContext';
+import useUiContext from '../../hooks/useUiContext';
+import { getOneAdminUser } from '../../services/userServices';
+import { getPlazas } from '../../services/plazasService';
+import usePlazasContext from '../../hooks/usePlazasContext';
 
 const PlazasDashboard = () => {
-	const { id } = useParams();
-	const { showModal } = useGlobalContext();
+	const { adminId } = useParams();
+	const { showModal } = useUiContext();
 	const { userAdmin, setUserAdmin } = useUsersContext();
+	const { plazas, setPlazas } = usePlazasContext();
 
-	const fetchUsers = async () => {
-		const res = await getOneAdminUser(id);
+	const fetchUser = async () => {
+		const res = await getOneAdminUser(adminId);
 		setUserAdmin(res);
 	};
 
+	const fetchPlazas = async () => {
+		const res = await getPlazas(adminId);
+		setPlazas(res);
+	};
+
 	useEffect(() => {
-		fetchUsers();
-	}, [id]);
+		fetchUser();
+		fetchPlazas();
+	}, [adminId]);
 
 	const handleAddPlaza = () => {
 		showModal({
-			title: 'Agregar plazas',
-			children: null,
+			title: 'Agregar plaza',
+			children: <PlazasForm />,
 		});
 	};
 
@@ -32,7 +41,7 @@ const PlazasDashboard = () => {
 			<h4 className='d-flex align-items-center px-3 mb-3 fw-bold'>
 				<MdAdminPanelSettings size={30} /> {userAdmin.name}
 			</h4>
-			<PlazasGrid data={[]} onClick={handleAddPlaza} />
+			<PlazasGrid data={plazas} onClick={handleAddPlaza} />
 		</section>
 	);
 };

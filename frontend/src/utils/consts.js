@@ -24,3 +24,17 @@ export const USER_INPUTS = [
 		label: 'Email',
 	},
 ];
+
+export const PLAZA_INPUTS = [
+	{
+		id: 'idName',
+		name: 'name',
+		label: 'Nombre',
+	},
+	{
+		id: 'idNumber',
+		name: 'number',
+		label: 'N° de plaza',
+		type: 'number',
+	},
+];
