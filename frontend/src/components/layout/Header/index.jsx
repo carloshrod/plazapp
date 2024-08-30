@@ -1,9 +1,9 @@
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { BsPower } from 'react-icons/bs';
 import { BsFillPersonFill } from 'react-icons/bs';
-import { logout } from '../../services/authService';
+import { logout } from '../../../services/authService';
 import { Link } from 'react-router-dom';
-import useAuthContext from '../../hooks/useAuthContext';
+import useAuthContext from '../../../hooks/useAuthContext';
 
 const Header = () => {
 	const { loggedUser } = useAuthContext();

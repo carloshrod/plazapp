@@ -5,11 +5,8 @@ import {
 	Navigate,
 } from 'react-router-dom';
 import AuthProvider from './contexts/auth/AuthProvider';
-import Login from './pages/Login';
-import MainDashboard from './pages/MainDashboard';
-import PlazasDashboard from './pages/PlazasDashboard';
-import PublicRoutes from './components/PublicRoutes';
-import PrivateRoutes from './components/PrivateRoutes';
+import { PublicRoutes, PrivateRoutes } from './components';
+import { Login, MainDashboard, PlazasDashboard } from './pages';
 import { PATHS } from './utils/paths';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';

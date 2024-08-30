@@ -1,5 +1,5 @@
 import { Modal } from 'react-bootstrap';
-import useGlobalContext from '../../hooks/useGlobalContext';
+import useGlobalContext from '../../../hooks/useGlobalContext';
 
 const CustomModal = () => {
 	const { modal, hideModal } = useGlobalContext();

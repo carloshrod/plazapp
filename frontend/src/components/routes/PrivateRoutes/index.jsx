@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuthContext from '../../hooks/useAuthContext';
-import { PATHS } from '../../utils/paths';
-import UsersProvider from '../../contexts/users/UsersProvider';
-import GlobalProvider from '../../contexts/global/GlobalProvider';
-import CustomModal from '../Modal';
-import Header from '../Header';
+import UsersProvider from '../../../contexts/users/UsersProvider';
+import GlobalProvider from '../../../contexts/global/GlobalProvider';
+import { Header, CustomModal } from '../../';
+import useAuthContext from '../../../hooks/useAuthContext';
+import { PATHS } from '../../../utils/paths';
 
 const { LOGIN } = PATHS;
 

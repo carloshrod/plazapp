@@ -1,5 +1,5 @@
-import UsersGrid from '../../components/UsersGrid';
-import UserForm from '../../components/UserForm';
+import { UserForm } from '../../components';
+import { UsersGrid } from '../../components';
 import useGlobalContext from '../../hooks/useGlobalContext';
 import useUsersContext from '../../hooks/useUsersContext';
 

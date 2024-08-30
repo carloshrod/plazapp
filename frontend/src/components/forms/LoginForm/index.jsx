@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, Button, Alert, Spinner } from 'react-bootstrap';
-import { signIn } from '../../services/authService';
+import { signIn } from '../../../services/authService';
 import './LoginForm.css';
 
 const LoginForm = () => {

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button, Form, Spinner } from 'react-bootstrap';
-import { addUser } from '../../services/userServices';
-import useGlobalContext from '../../hooks/useGlobalContext';
-import useUsersContext from '../../hooks/useUsersContext';
+import { addUser } from '../../../services/userServices';
+import useGlobalContext from '../../../hooks/useGlobalContext';
+import useUsersContext from '../../../hooks/useUsersContext';
 
 const initialForm = {
 	name: '',

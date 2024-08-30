@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuthContext from '../../hooks/useAuthContext';
-import { PATHS } from '../../utils/paths';
+import useAuthContext from '../../../hooks/useAuthContext';
+import { PATHS } from '../../../utils/paths';
 
 const { ADMIN } = PATHS;
 

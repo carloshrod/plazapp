@@ -31,7 +31,7 @@ const UsersGrid = ({ data, onClick }) => {
 							</Col>
 						))
 					) : (
-						<h2 className='text-center m-5'>¡No hay datos para mostrar!</h2>
+						<h2 className='text-center m-5'>¡No hay usuarios para mostrar!</h2>
 					)}
 				</Row>
 			</Container>
