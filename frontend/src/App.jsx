@@ -7,12 +7,17 @@ import {
 import AuthProvider from './contexts/auth/AuthProvider';
 import UiProvider from './contexts/ui/UiProvider';
 import { PublicRoutes, PrivateRoutes } from './components';
-import { Login, MainDashboard, PlazasDashboard } from './pages';
+import {
+	Login,
+	MainDashboard,
+	PlazasDashboard,
+	StoresDashboard,
+} from './pages';
 import { PATHS } from './utils/paths';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-const { HOME, LOGIN, ADMIN, PLAZAS } = PATHS;
+const { HOME, LOGIN, ADMIN, PLAZAS, STORES } = PATHS;
 
 function App() {
 	return (
@@ -27,6 +32,7 @@ function App() {
 						<Route path={ADMIN} element={<PrivateRoutes />}>
 							<Route index element={<MainDashboard />} />
 							<Route path={PLAZAS} element={<PlazasDashboard />} />
+							<Route path={STORES} element={<StoresDashboard />} />
 						</Route>
 					</Routes>
 				</Router>

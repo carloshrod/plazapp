@@ -11,7 +11,15 @@ const PlazasProvider = ({ children }) => {
 		setPlazas([...plazas, newPlaza]);
 	};
 
-	const data = { plazas, setPlazas, plaza, stores, store, dispatchPlazas };
+	const data = {
+		plazas,
+		setPlazas,
+		plaza,
+		setPlaza,
+		stores,
+		store,
+		dispatchPlazas,
+	};
 
 	return (
 		<PlazasContext.Provider value={data}>{children}</PlazasContext.Provider>

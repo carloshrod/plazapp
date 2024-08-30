@@ -3,6 +3,7 @@ import {
 	arrayUnion,
 	collection,
 	doc,
+	getDoc,
 	orderBy,
 	query,
 	serverTimestamp,
@@ -52,6 +53,16 @@ export const getPlazas = async adminId => {
 		);
 		const res = await fetchData(q);
 		return res;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const getOnePlaza = async plazaId => {
+	try {
+		const docRef = doc(db, 'plazas', plazaId);
+		const docSnap = await getDoc(docRef);
+		return docSnap.data();
 	} catch (error) {
 		console.error(error);
 	}
