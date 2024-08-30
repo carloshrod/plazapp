@@ -1,10 +1,10 @@
 import { UserForm } from '../../components';
 import { UsersGrid } from '../../components';
-import useGlobalContext from '../../hooks/useGlobalContext';
+import useUiContext from '../../hooks/useUiContext';
 import useUsersContext from '../../hooks/useUsersContext';
 
 const MainDashboard = () => {
-	const { showModal } = useGlobalContext();
+	const { showModal } = useUiContext();
 	const { userAdmins } = useUsersContext();
 
 	const handleAddUser = () => {
