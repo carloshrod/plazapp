@@ -11,13 +11,14 @@ import {
 	Login,
 	MainDashboard,
 	PlazasDashboard,
+	Store,
 	StoresDashboard,
 } from './pages';
 import { PATHS } from './utils/paths';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-const { HOME, LOGIN, ADMIN, PLAZAS, STORES } = PATHS;
+const { HOME, LOGIN, ADMIN, PLAZAS, STORES, STORE } = PATHS;
 
 function App() {
 	return (
@@ -33,6 +34,7 @@ function App() {
 							<Route index element={<MainDashboard />} />
 							<Route path={PLAZAS} element={<PlazasDashboard />} />
 							<Route path={STORES} element={<StoresDashboard />} />
+							<Route path={STORE} element={<Store />} />
 						</Route>
 					</Routes>
 				</Router>

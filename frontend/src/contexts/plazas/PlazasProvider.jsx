@@ -23,6 +23,7 @@ const PlazasProvider = ({ children }) => {
 		stores,
 		setStores,
 		store,
+		setStore,
 		dispatchPlazas,
 		dispatchStores,
 	};

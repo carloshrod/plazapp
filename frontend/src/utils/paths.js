@@ -4,4 +4,5 @@ export const PATHS = {
 	ADMIN: '/admin-panel',
 	PLAZAS: '/admin-panel/:adminId',
 	STORES: '/admin-panel/:adminId/:plazaId',
+	STORE: '/admin-panel/:adminId/:plazaId/:storeId',
 };
