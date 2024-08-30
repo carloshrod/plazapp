@@ -1,6 +1,7 @@
 export { default as LoginForm } from './forms/LoginForm';
 export { default as UserForm } from './forms/UserForm';
 export { default as PlazasForm } from './forms/PlazasForm';
+export { default as StoreForm } from './forms/StoreForm';
 export { default as Header } from './layout/Header';
 export { default as CustomModal } from './layout/Modal';
 export { default as UsersGrid } from './layout/UsersGrid';

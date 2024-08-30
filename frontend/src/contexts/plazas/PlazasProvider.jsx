@@ -11,14 +11,20 @@ const PlazasProvider = ({ children }) => {
 		setPlazas([...plazas, newPlaza]);
 	};
 
+	const dispatchStores = newStore => {
+		setStores([...stores, newStore]);
+	};
+
 	const data = {
 		plazas,
 		setPlazas,
 		plaza,
 		setPlaza,
 		stores,
+		setStores,
 		store,
 		dispatchPlazas,
+		dispatchStores,
 	};
 
 	return (

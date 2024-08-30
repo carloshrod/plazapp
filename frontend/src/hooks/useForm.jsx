@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { signIn } from '../services/authService';
 import { addUser } from '../services/userServices';
 import useUiContext from './useUiContext';
-import { addPlaza } from '../services/plazasService';
+import { addPlaza, addStore } from '../services/plazasService';
 import { useParams } from 'react-router-dom';
 
 const useForm = initialForm => {
 	const [form, setForm] = useState(initialForm);
 	const [loading, setLoading] = useState(false);
 	const { hideModal } = useUiContext();
-	const { adminId } = useParams();
+	const { adminId, plazaId } = useParams();
 
 	const handleChange = event => {
 		const { value, name } = event.target;
@@ -59,6 +59,20 @@ const useForm = initialForm => {
 		}
 	};
 
+	const handleSubmitStore = async () => {
+		try {
+			setLoading(true);
+			const createdStore = await addStore(form, plazaId);
+			console.log('Local agregado con éxito!');
+			hideModal();
+			return createdStore;
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return {
 		form,
 		loading,
@@ -66,6 +80,7 @@ const useForm = initialForm => {
 		handleSubmitLogin,
 		handleSubmitUser,
 		handleSubmitPlaza,
+		handleSubmitStore,
 	};
 };
 

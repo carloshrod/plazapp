@@ -38,3 +38,17 @@ export const PLAZA_INPUTS = [
 		type: 'number',
 	},
 ];
+
+export const STORE_INPUTS = [
+	{
+		id: 'idName',
+		name: 'name',
+		label: 'Nombre',
+	},
+	{
+		id: 'idNumber',
+		name: 'number',
+		label: 'N° de local',
+		type: 'number',
+	},
+];

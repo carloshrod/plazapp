@@ -2,31 +2,37 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { FaChevronCircleRight } from 'react-icons/fa';
-import { StoresGrid } from '../../components';
+import { StoreForm, StoresGrid } from '../../components';
 import useUsersContext from '../../hooks/useUsersContext';
 import usePlazasContext from '../../hooks/usePlazasContext';
-import { getOnePlaza } from '../../services/plazasService';
+import { getOnePlaza, getStores } from '../../services/plazasService';
 import useUiContext from '../../hooks/useUiContext';
 
 const StoresDashboard = () => {
 	const { plazaId } = useParams();
 	const { showModal } = useUiContext();
 	const { userAdmin } = useUsersContext();
-	const { plaza, setPlaza } = usePlazasContext();
+	const { plaza, setPlaza, stores, setStores } = usePlazasContext();
 
 	const fetchPlaza = async () => {
 		const res = await getOnePlaza(plazaId);
 		setPlaza(res);
 	};
 
+	const fetchStores = async () => {
+		const res = await getStores(plazaId);
+		setStores(res);
+	};
+
 	useEffect(() => {
 		fetchPlaza();
+		fetchStores();
 	}, [plazaId]);
 
 	const handleAddStore = () => {
 		showModal({
 			title: 'Agregar local',
-			children: null,
+			children: <StoreForm />,
 		});
 	};
 
@@ -37,7 +43,7 @@ const StoresDashboard = () => {
 				<FaChevronCircleRight className='mx-3' />
 				{plaza.name}
 			</h4>
-			<StoresGrid data={[]} onClick={handleAddStore} />
+			<StoresGrid data={stores} onClick={handleAddStore} />
 		</section>
 	);
 };
