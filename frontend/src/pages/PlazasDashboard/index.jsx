@@ -4,7 +4,7 @@ import { MdAdminPanelSettings } from 'react-icons/md';
 import { PlazasForm, PlazasGrid } from '../../components';
 import useUsersContext from '../../hooks/useUsersContext';
 import useUiContext from '../../hooks/useUiContext';
-import { getOneAdminUser } from '../../services/userServices';
+import { getOneUser } from '../../services/userServices';
 import { getPlazas } from '../../services/plazasService';
 import usePlazasContext from '../../hooks/usePlazasContext';
 
@@ -15,7 +15,7 @@ const PlazasDashboard = () => {
 	const { plazas, setPlazas } = usePlazasContext();
 
 	const fetchUser = async () => {
-		const res = await getOneAdminUser(adminId);
+		const res = await getOneUser(adminId);
 		setUserAdmin(res);
 	};
 

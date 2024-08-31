@@ -7,7 +7,7 @@ const MainDashboard = () => {
 	const { showModal } = useUiContext();
 	const { userAdmins } = useUsersContext();
 
-	const handleAddUser = () => {
+	const handleAddUserAdmin = () => {
 		showModal({
 			title: 'Agregar administrador',
 			children: <UserForm />,
@@ -16,7 +16,7 @@ const MainDashboard = () => {
 
 	return (
 		<section className='p-4 text-primary'>
-			<UsersGrid data={userAdmins} onClick={handleAddUser} />
+			<UsersGrid data={userAdmins} onClick={handleAddUserAdmin} />
 		</section>
 	);
 };

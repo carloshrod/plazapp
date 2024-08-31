@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { signIn } from '../services/authService';
-import { addUser } from '../services/userServices';
+import { addUserAdmin, addUserTenant } from '../services/userServices';
 import useUiContext from './useUiContext';
 import { addPlaza, addStore } from '../services/plazasService';
 import { useParams } from 'react-router-dom';
@@ -9,7 +9,7 @@ const useForm = initialForm => {
 	const [form, setForm] = useState(initialForm);
 	const [loading, setLoading] = useState(false);
 	const { hideModal } = useUiContext();
-	const { adminId, plazaId } = useParams();
+	const { adminId, plazaId, storeId } = useParams();
 
 	const handleChange = event => {
 		const { value, name } = event.target;
@@ -34,14 +34,20 @@ const useForm = initialForm => {
 	const handleSubmitUser = async () => {
 		try {
 			setLoading(true);
-			const createdUser = await addUser(form);
-			console.log('Usuario agregado con éxito!');
-			hideModal();
-			return createdUser;
+			if (!storeId) {
+				const createdUserAdmin = await addUserAdmin(form);
+				console.log('Administrador agregado con éxito!');
+				return createdUserAdmin;
+			} else {
+				const createdUserTenant = await addUserTenant(form, storeId);
+				console.log('Locatario agregado con éxito!');
+				return createdUserTenant;
+			}
 		} catch (error) {
 			console.error(error);
 		} finally {
 			setLoading(false);
+			hideModal();
 		}
 	};
 

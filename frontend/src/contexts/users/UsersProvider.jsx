@@ -5,6 +5,7 @@ import { getAdminUsers } from '../../services/userServices';
 const UsersProvider = ({ children }) => {
 	const [userAdmins, setUserAdmins] = useState([]);
 	const [userAdmin, setUserAdmin] = useState({});
+	const [userTenant, setUserTenant] = useState({});
 
 	const fetchUserAdmins = async () => {
 		const res = await getAdminUsers();
@@ -24,6 +25,8 @@ const UsersProvider = ({ children }) => {
 		dispatchUserAdmins,
 		userAdmin,
 		setUserAdmin,
+		userTenant,
+		setUserTenant,
 	};
 
 	return <UsersContext.Provider value={data}>{children}</UsersContext.Provider>;
