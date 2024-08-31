@@ -5,7 +5,7 @@ import { MdAdminPanelSettings } from 'react-icons/md';
 import useUsersContext from '../../hooks/useUsersContext';
 import usePlazasContext from '../../hooks/usePlazasContext';
 import { getOneStore } from '../../services/plazasService';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { UserForm } from '../../components';
 import useUiContext from '../../hooks/useUiContext';
 import { getOneUser } from '../../services/userServices';
@@ -16,24 +16,24 @@ const Store = () => {
 	const { userAdmin, userTenant, setUserTenant } = useUsersContext();
 	const { plaza, store, setStore } = usePlazasContext();
 
-	const fetchStore = useCallback(async () => {
+	const fetchStore = async () => {
 		const res = await getOneStore(storeId);
 		setStore(res);
-	}, [storeId, setStore]);
+	};
 
-	const fetchUserTenant = useCallback(async () => {
+	const fetchUserTenant = async () => {
 		if (store?.tenantId) {
 			const res = await getOneUser(store.tenantId);
 			setUserTenant(res);
 		} else {
 			setUserTenant({});
 		}
-	}, [store, setUserTenant]);
+	};
 
 	useEffect(() => {
 		fetchStore();
 		fetchUserTenant();
-	}, [fetchStore, fetchUserTenant]);
+	}, [storeId, store?.tenantId]);
 
 	const handleAddUserTenant = () => {
 		showModal({
@@ -52,7 +52,7 @@ const Store = () => {
 			<div className='bg-secondary p-4 pb-1 rounded'>
 				<div className='d-flex justify-content-between mb-3'>
 					<h3 className='px-3 mb-3 fw-bold'>{store.name}</h3>
-					{store?.tenantId ? (
+					{userTenant?.email ? (
 						<h4>{userTenant?.email}</h4>
 					) : (
 						<Button

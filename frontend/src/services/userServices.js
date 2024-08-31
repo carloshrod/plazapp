@@ -1,5 +1,4 @@
 import {
-	arrayUnion,
 	collection,
 	doc,
 	getDoc,
@@ -74,7 +73,7 @@ export const addUserTenant = async (user, storeId) => {
 			...user,
 			id: uid,
 			role: 'tenant',
-			stores: arrayUnion(storeId),
+			storeId,
 			disabled: false,
 			createdAt: serverTimestamp(),
 			lastUpdate: serverTimestamp(),

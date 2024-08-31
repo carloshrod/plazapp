@@ -12,12 +12,16 @@ const initialForm = {
 const UserForm = () => {
 	const { form, loading, handleChange, handleSubmitUser } =
 		useForm(initialForm);
-	const { dispatchUserAdmins } = useUsersContext();
+	const { dispatchUserAdmins, setUserTenant } = useUsersContext();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 		const newUser = await handleSubmitUser();
-		dispatchUserAdmins(newUser);
+		if (newUser?.role === 'admin') {
+			dispatchUserAdmins(newUser);
+		} else {
+			setUserTenant(newUser);
+		}
 	};
 
 	return (

@@ -12,7 +12,7 @@ const StoresDashboard = () => {
 	const { plazaId } = useParams();
 	const { showModal } = useUiContext();
 	const { userAdmin } = useUsersContext();
-	const { plaza, setPlaza, stores, setStores } = usePlazasContext();
+	const { plaza, setPlaza, stores, setStores, setStore } = usePlazasContext();
 
 	const fetchPlaza = async () => {
 		const res = await getOnePlaza(plazaId);
@@ -27,6 +27,7 @@ const StoresDashboard = () => {
 	useEffect(() => {
 		fetchPlaza();
 		fetchStores();
+		setStore({});
 	}, [plazaId]);
 
 	const handleAddStore = () => {
