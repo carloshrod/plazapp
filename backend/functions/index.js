@@ -8,11 +8,13 @@ admin.initializeApp({
 
 export const registerUser = onRequest(async (req, res) => {
   try {
-    const { email, password } = req.body;
+    console.log(req.body);
+    const { email, name } = req.body;
 
     const userRecord = await admin.auth().createUser({
-      email: email,
-      password: password,
+      email,
+      displayName: name,
+      password: "Test1234",
     });
 
     return res
