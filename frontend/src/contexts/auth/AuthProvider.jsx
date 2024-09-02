@@ -5,8 +5,8 @@ import { auth, db } from '../../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 const AuthProvider = ({ children }) => {
-	const [isAuth, setIsAuth] = useState(false);
 	const [loggedUser, setloggedUser] = useState(null);
+	const [isAuth, setIsAuth] = useState(false);
 
 	useEffect(() => {
 		onAuthStateChanged(auth, async currentUser => {
@@ -16,6 +16,7 @@ const AuthProvider = ({ children }) => {
 					setloggedUser(userDoc.data());
 					setIsAuth(true);
 				} else {
+					setloggedUser(null);
 					setIsAuth(false);
 				}
 			} catch (error) {

@@ -1,8 +1,9 @@
 export const PATHS = {
 	HOME: '/',
 	LOGIN: '/login',
-	ADMIN: '/admin-panel',
-	PLAZAS: '/admin-panel/:adminId',
+	SUPERADMIN: '/admin-panel',
+	ADMIN: '/admin-panel/:adminId',
 	STORES: '/admin-panel/:adminId/:plazaId',
 	STORE: '/admin-panel/:adminId/:plazaId/:storeId',
+	TENANT: '/admin-panel/:storeId',
 };

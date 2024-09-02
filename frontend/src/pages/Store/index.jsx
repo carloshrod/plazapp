@@ -44,11 +44,13 @@ const Store = () => {
 
 	return (
 		<section className='px-4 py-2 text-primary'>
-			<h4 className='d-flex align-items-center px-3 mb-3 fw-bold'>
-				<MdAdminPanelSettings size={30} /> {userAdmin.name}{' '}
-				<FaChevronCircleRight className='mx-3' />
-				{plaza.name}
-			</h4>
+			{userAdmin?.name ? (
+				<h4 className='d-flex align-items-center px-3 mb-3 fw-bold'>
+					<MdAdminPanelSettings size={30} /> {userAdmin.name}{' '}
+					<FaChevronCircleRight className='mx-3' />
+					{plaza.name}
+				</h4>
+			) : null}
 			<div className='bg-secondary p-4 pb-1 rounded'>
 				<div className='d-flex justify-content-between mb-3'>
 					<h3 className='px-3 mb-3 fw-bold'>{store.name}</h3>

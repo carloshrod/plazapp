@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { FaChevronLeft } from 'react-icons/fa';
 import { Header, CustomModal } from '../../';
@@ -7,13 +7,31 @@ import UsersProvider from '../../../contexts/users/UsersProvider';
 import PlazasProvider from '../../../contexts/plazas/PlazasProvider';
 import { PATHS } from '../../../utils/paths';
 
-const { LOGIN } = PATHS;
+const { LOGIN, SUPERADMIN, ADMIN, TENANT } = PATHS;
 
 const PrivateRoutes = () => {
-	const { isAuth } = useAuthContext();
+	const { isAuth, loggedUser } = useAuthContext();
 	const navigate = useNavigate();
-	const params = useParams();
-	const isRootPath = Object.keys(params).length === 0;
+	const { pathname } = useLocation();
+	let initialRoute = SUPERADMIN;
+
+	if (!isAuth) {
+		return <Navigate to={LOGIN} replace />;
+	}
+
+	if (loggedUser.role === 'admin') {
+		initialRoute = ADMIN.replace(':adminId', loggedUser.id);
+		if (pathname === SUPERADMIN) {
+			return <Navigate to={initialRoute} replace />;
+		}
+	} else if (loggedUser.role === 'tenant') {
+		initialRoute = TENANT.replace(':storeId', loggedUser.storeId);
+		if (pathname !== initialRoute) {
+			return <Navigate to={initialRoute} replace />;
+		}
+	}
+
+	const isRootPath = initialRoute === pathname;
 
 	return (
 		<UsersProvider>
@@ -31,7 +49,7 @@ const PrivateRoutes = () => {
 					) : null}
 					<h2>Dashboard</h2>
 				</section>
-				{!isAuth ? <Navigate to={LOGIN} /> : <Outlet />}
+				<Outlet />
 				<CustomModal />
 			</PlazasProvider>
 		</UsersProvider>
