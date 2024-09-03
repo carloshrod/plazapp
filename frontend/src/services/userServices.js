@@ -1,4 +1,5 @@
 import {
+	arrayUnion,
 	collection,
 	doc,
 	getDoc,
@@ -74,6 +75,7 @@ export const addUserTenant = async (user, storeId) => {
 			id: uid,
 			role: 'tenant',
 			storeId,
+			notifDays: [],
 			disabled: false,
 			createdAt: serverTimestamp(),
 			lastUpdate: serverTimestamp(),
@@ -87,6 +89,18 @@ export const addUserTenant = async (user, storeId) => {
 		});
 
 		return userTenantToCreate;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const addNotification = async ({ userTenantId, notifDay }) => {
+	try {
+		const userTenantDocRef = doc(db, 'users', userTenantId);
+
+		await updateDoc(userTenantDocRef, {
+			notifDays: arrayUnion(notifDay),
+		});
 	} catch (error) {
 		console.error(error);
 	}
