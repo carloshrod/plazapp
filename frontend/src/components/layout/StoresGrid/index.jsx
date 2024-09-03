@@ -1,16 +1,20 @@
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
+import useAuthContext from '../../../hooks/useAuthContext';
 
 const StoresGrid = ({ data, onClick }) => {
 	const { pathname } = useLocation();
+	const { loggedUser } = useAuthContext();
 
 	return (
 		<div className='bg-secondary p-4 pb-1 rounded'>
 			<div className='d-flex justify-content-between mb-3'>
 				<h3>Locales</h3>
-				<Button className='me-3' variant='outline-primary' onClick={onClick}>
-					Agregar local
-				</Button>
+				{loggedUser?.role === 'superadmin' ? (
+					<Button variant='outline-primary' onClick={onClick}>
+						Agregar local
+					</Button>
+				) : null}
 			</div>
 			<Container className='py-3'>
 				<Row>

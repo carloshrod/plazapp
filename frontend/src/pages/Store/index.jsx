@@ -5,8 +5,8 @@ import { MdAdminPanelSettings } from 'react-icons/md';
 import useUsersContext from '../../hooks/useUsersContext';
 import usePlazasContext from '../../hooks/usePlazasContext';
 import { getOneStore } from '../../services/plazasService';
-import { useEffect } from 'react';
-import { UserForm } from '../../components';
+import { useEffect, useState } from 'react';
+import { CustomCalendar, UserForm } from '../../components';
 import useUiContext from '../../hooks/useUiContext';
 import { getOneUser } from '../../services/userServices';
 
@@ -15,6 +15,7 @@ const Store = () => {
 	const { showModal } = useUiContext();
 	const { userAdmin, userTenant, setUserTenant } = useUsersContext();
 	const { plaza, store, setStore } = usePlazasContext();
+	const [showCalendar, setShowCalendar] = useState(false);
 
 	const fetchStore = async () => {
 		const res = await getOneStore(storeId);
@@ -45,28 +46,37 @@ const Store = () => {
 	return (
 		<section className='px-4 py-2 text-primary'>
 			{userAdmin?.name ? (
-				<h4 className='d-flex align-items-center px-3 mb-3 fw-bold'>
-					<MdAdminPanelSettings size={30} /> {userAdmin.name}{' '}
-					<FaChevronCircleRight className='mx-3' />
-					{plaza.name}
-				</h4>
-			) : null}
-			<div className='bg-secondary p-4 pb-1 rounded'>
-				<div className='d-flex justify-content-between mb-3'>
-					<h3 className='px-3 mb-3 fw-bold'>{store.name}</h3>
-					{userTenant?.email ? (
-						<h4>{userTenant?.email}</h4>
-					) : (
-						<Button
-							className='me-3'
-							variant='outline-primary'
-							onClick={handleAddUserTenant}
-						>
-							Asignar locatario
-						</Button>
-					)}
+				<div className='d-flex justify-content-between align-items-center mb-3 px-4'>
+					<h4 className='d-flex align-items-center mb-0 fw-bold'>
+						<MdAdminPanelSettings size={30} /> {userAdmin.name}{' '}
+						<FaChevronCircleRight className='mx-3' />
+						{plaza.name}
+					</h4>
+					<Button onClick={() => setShowCalendar(!showCalendar)}>
+						{!showCalendar ? 'Calendario' : 'Volver'}
+					</Button>
 				</div>
-			</div>
+			) : null}
+			{!showCalendar ? (
+				<div className='bg-secondary p-4 pb-1 rounded'>
+					<div className='d-flex justify-content-between mb-3'>
+						<h3 className='px-3 mb-3 fw-bold'>{store.name}</h3>
+						{userTenant?.email ? (
+							<h4>{userTenant?.email}</h4>
+						) : (
+							<Button
+								className='me-3'
+								variant='outline-primary'
+								onClick={handleAddUserTenant}
+							>
+								Asignar locatario
+							</Button>
+						)}
+					</div>
+				</div>
+			) : (
+				<CustomCalendar storeName={store.name} />
+			)}
 		</section>
 	);
 };
