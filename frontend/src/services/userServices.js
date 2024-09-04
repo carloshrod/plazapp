@@ -1,4 +1,5 @@
 import {
+	arrayRemove,
 	arrayUnion,
 	collection,
 	doc,
@@ -101,6 +102,28 @@ export const addNotification = async ({ userTenantId, notifDay }) => {
 		await updateDoc(userTenantDocRef, {
 			notifDays: arrayUnion(notifDay),
 		});
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const deleteNotification = async (userTenantId, notifDay) => {
+	try {
+		const userTenantDocRef = doc(db, 'users', userTenantId);
+
+		await updateDoc(userTenantDocRef, {
+			notifDays: arrayRemove(notifDay),
+		});
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const addContactInfo = async (contactInfo, userTenantId) => {
+	try {
+		const userTenantDocRef = doc(db, 'users', userTenantId);
+
+		await updateDoc(userTenantDocRef, contactInfo);
 	} catch (error) {
 		console.error(error);
 	}

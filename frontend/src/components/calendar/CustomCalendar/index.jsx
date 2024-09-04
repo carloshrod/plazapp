@@ -46,10 +46,7 @@ const CustomCalendar = ({ storeName }) => {
 						today: 'Hoy',
 					}}
 				/>
-
-				<Notifications
-				// handleDeleteNotification={handleDeleteNotification}
-				/>
+				<Notifications />
 			</div>
 		</>
 	);

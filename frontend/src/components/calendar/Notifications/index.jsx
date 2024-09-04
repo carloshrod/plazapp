@@ -1,10 +1,20 @@
 import { Button } from 'react-bootstrap';
-import { TiDelete, TiEdit } from 'react-icons/ti';
+import { TiDelete } from 'react-icons/ti';
 import './Notifications.css';
 import useUsersContext from '../../../hooks/useUsersContext';
+import { deleteNotification } from '../../../services/userServices';
 
-const Notifications = ({ handleDeleteNotification }) => {
-	const { userTenant } = useUsersContext();
+const Notifications = () => {
+	const { userTenant, setUserTenant } = useUsersContext();
+
+	const handleDeleteNotification = async (userTenantId, notifDay) => {
+		await deleteNotification(userTenantId, notifDay);
+		const newData = userTenant.notifDays.filter(day => day !== notifDay);
+		setUserTenant({
+			...userTenant,
+			notifDays: newData,
+		});
+	};
 
 	return (
 		<div className='notifications'>
@@ -28,16 +38,11 @@ const Notifications = ({ handleDeleteNotification }) => {
 								variant='danger'
 								size='sm'
 								className='p-0 d-flex align-items-center my-auto'
-								onClick={() => handleDeleteNotification(userTenant.id)}
+								onClick={() =>
+									handleDeleteNotification(userTenant.id, notifDay)
+								}
 							>
-								<TiDelete size={18} />
-							</Button>
-							<Button
-								variant='primary'
-								size='sm'
-								className='p-0 d-flex align-items-center my-auto'
-							>
-								<TiEdit size={18} />
+								<TiDelete size={24} />
 							</Button>
 						</div>
 					</div>
