@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { signIn } from '../services/authService';
-import { addUserAdmin, addUserTenant } from '../services/userServices';
+import {
+	addContactInfo,
+	addUserAdmin,
+	addUserTenant,
+} from '../services/userServices';
 import useUiContext from './useUiContext';
 import { addPlaza, addStore } from '../services/plazasService';
 import { useParams } from 'react-router-dom';
@@ -79,6 +83,19 @@ const useForm = initialForm => {
 		}
 	};
 
+	const handleSubmitContactInfo = async userTenantId => {
+		try {
+			setLoading(true);
+			console.log(form, userTenantId);
+			await addContactInfo(form, userTenantId);
+			hideModal();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return {
 		form,
 		loading,
@@ -87,6 +104,7 @@ const useForm = initialForm => {
 		handleSubmitUser,
 		handleSubmitPlaza,
 		handleSubmitStore,
+		handleSubmitContactInfo,
 	};
 };
 

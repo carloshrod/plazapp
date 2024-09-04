@@ -6,13 +6,15 @@ import useUsersContext from '../../hooks/useUsersContext';
 import usePlazasContext from '../../hooks/usePlazasContext';
 import { getOneStore } from '../../services/plazasService';
 import { useEffect, useState } from 'react';
-import { CustomCalendar, UserForm } from '../../components';
+import { CustomCalendar, TenantInfo, UserForm } from '../../components';
 import useUiContext from '../../hooks/useUiContext';
 import { getOneUser } from '../../services/userServices';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const Store = () => {
 	const { storeId } = useParams();
 	const { showModal } = useUiContext();
+	const { loggedUser } = useAuthContext();
 	const { userAdmin, userTenant, setUserTenant } = useUsersContext();
 	const { plaza, store, setStore } = usePlazasContext();
 	const [showCalendar, setShowCalendar] = useState(false);
@@ -58,9 +60,9 @@ const Store = () => {
 				</div>
 			) : null}
 			{!showCalendar ? (
-				<div className='bg-secondary p-4 pb-1 rounded'>
-					<div className='d-flex justify-content-between mb-3'>
-						<h3 className='px-3 mb-3 fw-bold'>{store.name}</h3>
+				<div className='bg-secondary p-4 rounded'>
+					<div className='d-flex justify-content-between align-items-center'>
+						<h3 className='px-3 mb-0 fw-bold'>{store.name}</h3>
 						{userTenant?.email ? (
 							<h4>{userTenant?.email}</h4>
 						) : (
@@ -73,6 +75,7 @@ const Store = () => {
 							</Button>
 						)}
 					</div>
+					{loggedUser.role !== 'tenant' ? <TenantInfo /> : null}
 				</div>
 			) : (
 				<CustomCalendar storeName={store.name} />

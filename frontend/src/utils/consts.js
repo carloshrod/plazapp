@@ -52,3 +52,32 @@ export const STORE_INPUTS = [
 		type: 'number',
 	},
 ];
+
+export const CONTACT_INFO_INPUTS = [
+	{
+		id: 'idAddress',
+		name: 'address',
+		label: 'Dirección',
+	},
+	{
+		id: 'idPhoneNumber',
+		name: 'phoneNumber',
+		label: 'N° de teléfono',
+	},
+	{
+		id: 'idGuarantorName',
+		name: 'guarantorName',
+		label: 'Nombre',
+	},
+	{
+		id: 'idGuarantorEmail',
+		name: 'guarantorEmail',
+		label: 'Email',
+		type: 'email',
+	},
+	{
+		id: 'idGuarantorPhone',
+		name: 'guarantorPhone',
+		label: 'N° de teléfono',
+	},
+];
