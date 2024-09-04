@@ -99,9 +99,24 @@ export const addNotification = async ({ userTenantId, notifDay }) => {
 	try {
 		const userTenantDocRef = doc(db, 'users', userTenantId);
 
+		// Verificar si la notificación ya existe
+		const userTenantDoc = await getDoc(userTenantDocRef);
+		const notifDays = userTenantDoc.data().notifDays || [];
+		if (notifDays.includes(notifDay)) {
+			return {
+				success: false,
+				message: 'Ya existe una notificación para este día!',
+			};
+		}
+
 		await updateDoc(userTenantDocRef, {
 			notifDays: arrayUnion(notifDay),
 		});
+
+		return {
+			success: true,
+			message: 'Notificación agregada con éxito!',
+		};
 	} catch (error) {
 		console.error(error);
 	}

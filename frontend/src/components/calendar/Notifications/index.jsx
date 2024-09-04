@@ -18,7 +18,7 @@ const Notifications = () => {
 
 	return (
 		<div className='notifications'>
-			<h4>Notificacion</h4>
+			<h4>Notificaciones</h4>
 			{userTenant?.notifDays?.length ? (
 				userTenant?.notifDays.map(notifDay => (
 					<div
@@ -49,7 +49,7 @@ const Notifications = () => {
 				))
 			) : (
 				<p className='py-5 text-center fw-semibold bg-light rounded'>
-					¡Agregar notificaciones!
+					¡Seleccione un día en el calendario para agregar notificacion!
 				</p>
 			)}
 		</div>

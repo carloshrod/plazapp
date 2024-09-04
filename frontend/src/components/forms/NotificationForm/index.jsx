@@ -19,12 +19,14 @@ const NotificationForm = ({ selectedDate }) => {
 					userTenantId: userTenant?.id,
 					notifDay: Number(dayjs(selectedDate).format('DD')),
 				};
-
-				await addNotification(newNotification);
-				setUserTenant({
-					...userTenant,
-					notifDays: [...userTenant.notifDays, newNotification.notifDay],
-				});
+				const { success, message } = await addNotification(newNotification);
+				if (success) {
+					setUserTenant({
+						...userTenant,
+						notifDays: [...userTenant.notifDays, newNotification.notifDay],
+					});
+				}
+				console.log(message);
 				hideModal();
 			}
 		} catch (error) {
