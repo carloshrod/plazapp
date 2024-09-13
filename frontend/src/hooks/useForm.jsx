@@ -1,19 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signIn } from '../services/authService';
 import {
 	addContactInfo,
 	addUserAdmin,
 	addUserTenant,
+	updateUserTenant,
 } from '../services/userServices';
 import useUiContext from './useUiContext';
 import { addPlaza, addStore } from '../services/plazasService';
 import { useParams } from 'react-router-dom';
 
-const useForm = initialForm => {
+const useForm = (initialForm, dataToEdit = undefined) => {
 	const [form, setForm] = useState(initialForm);
 	const [loading, setLoading] = useState(false);
 	const { hideModal } = useUiContext();
 	const { adminId, plazaId, storeId } = useParams();
+
+	useEffect(() => {
+		if (dataToEdit) {
+			setForm({
+				...initialForm,
+				...dataToEdit,
+			});
+		} else {
+			setForm(initialForm);
+		}
+	}, [initialForm]);
 
 	const handleChange = event => {
 		const { value, name } = event.target;
@@ -35,23 +47,17 @@ const useForm = initialForm => {
 		}
 	};
 
-	const handleSubmitUser = async () => {
+	const handleSubmitUserAdmin = async () => {
 		try {
 			setLoading(true);
-			if (!storeId) {
-				const createdUserAdmin = await addUserAdmin(form);
-				console.log('Administrador agregado con éxito!');
-				return createdUserAdmin;
-			} else {
-				const createdUserTenant = await addUserTenant(form, storeId);
-				console.log('Locatario agregado con éxito!');
-				return createdUserTenant;
-			}
+			const createdUserAdmin = await addUserAdmin(form);
+			console.log('Administrador agregado con éxito!');
+			hideModal();
+			return createdUserAdmin;
 		} catch (error) {
 			console.error(error);
 		} finally {
 			setLoading(false);
-			hideModal();
 		}
 	};
 
@@ -83,10 +89,28 @@ const useForm = initialForm => {
 		}
 	};
 
+	const handleSubmitUserTenant = async userTenantId => {
+		try {
+			setLoading(true);
+			if (!userTenantId) {
+				const createdUserTenant = await addUserTenant(form, storeId);
+				console.log('Locatario agregado con éxito!');
+				return createdUserTenant;
+			} else {
+				await updateUserTenant(form, userTenantId);
+				console.log('Locatario actualizado con éxito!');
+			}
+			hideModal();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const handleSubmitContactInfo = async userTenantId => {
 		try {
 			setLoading(true);
-			console.log(form, userTenantId);
 			await addContactInfo(form, userTenantId);
 			hideModal();
 		} catch (error) {
@@ -101,10 +125,11 @@ const useForm = initialForm => {
 		loading,
 		handleChange,
 		handleSubmitLogin,
-		handleSubmitUser,
+		handleSubmitUserAdmin,
 		handleSubmitPlaza,
 		handleSubmitStore,
 		handleSubmitContactInfo,
+		handleSubmitUserTenant,
 	};
 };
 

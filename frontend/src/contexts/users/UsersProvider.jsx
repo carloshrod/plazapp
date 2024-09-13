@@ -6,6 +6,7 @@ const UsersProvider = ({ children }) => {
 	const [userAdmins, setUserAdmins] = useState([]);
 	const [userAdmin, setUserAdmin] = useState({});
 	const [userTenant, setUserTenant] = useState({});
+	const [userToEdit, setUserToEdit] = useState({});
 
 	const fetchUserAdmins = async () => {
 		const res = await getAdminUsers();
@@ -27,6 +28,8 @@ const UsersProvider = ({ children }) => {
 		setUserAdmin,
 		userTenant,
 		setUserTenant,
+		userToEdit,
+		setUserToEdit,
 	};
 
 	return <UsersContext.Provider value={data}>{children}</UsersContext.Provider>;

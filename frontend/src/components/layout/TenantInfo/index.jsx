@@ -7,25 +7,38 @@ import useUiContext from '../../../hooks/useUiContext';
 
 const TenantInfo = () => {
 	const { showModal } = useUiContext();
-	const { userTenant } = useUsersContext();
+	const { userTenant, setUserToEdit } = useUsersContext();
 	const { store } = usePlazasContext();
 
 	const handleAddContactInfo = () => {
+		setUserToEdit(userTenant);
 		showModal({
 			title: 'Agregar información de contacto',
 			children: <ContactInfoForm />,
 		});
 	};
 
+	const handleEditContactInfo = () => {
+		setUserToEdit(userTenant);
+		showModal({
+			title: 'Editar información de contacto',
+			children: <ContactInfoForm />,
+		});
+	};
+
 	return (
 		<section className='px-3'>
-			{!userTenant?.address ? (
+			{userTenant?.email ? (
 				<Button
-					className='me-3'
+					className='mt-3'
 					variant='outline-primary'
-					onClick={handleAddContactInfo}
+					onClick={
+						!userTenant?.address
+							? () => handleAddContactInfo()
+							: () => handleEditContactInfo()
+					}
 				>
-					Agregar Info de Contacto
+					{!userTenant?.address ? 'Agregar' : 'Editar'} Info de Contacto
 				</Button>
 			) : null}
 			<div className='d-flex flex-column gap-2 my-4'>
@@ -54,12 +67,12 @@ const TenantInfo = () => {
 								Obligado Solidario - {userTenant?.guarantorName}
 							</h5>
 							<span>
-								<MdLocalPhone size={24} className='me-1' />
-								{userTenant?.guarantorPhone}
-							</span>
-							<span>
 								<MdEmail size={24} className='me-1' />
 								{userTenant?.guarantorEmail}
+							</span>
+							<span>
+								<MdLocalPhone size={24} className='me-1' />
+								{userTenant?.guarantorPhone}
 							</span>
 						</>
 					) : null}

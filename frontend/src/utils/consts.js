@@ -55,14 +55,24 @@ export const STORE_INPUTS = [
 
 export const CONTACT_INFO_INPUTS = [
 	{
-		id: 'idAddress',
-		name: 'address',
-		label: 'Dirección',
+		id: 'idName',
+		name: 'name',
+		label: 'Nombre',
+	},
+	{
+		id: 'idEmail',
+		name: 'email',
+		label: 'Email',
 	},
 	{
 		id: 'idPhoneNumber',
 		name: 'phoneNumber',
 		label: 'N° de teléfono',
+	},
+	{
+		id: 'idAddress',
+		name: 'address',
+		label: 'Dirección',
 	},
 	{
 		id: 'idGuarantorName',

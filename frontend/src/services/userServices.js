@@ -17,26 +17,29 @@ import axios from 'axios';
 import { env } from '../config/env';
 
 const usersCollectionRef = collection(db, 'users');
-const { REGISTER_USER_ENDPOINT } = env;
+const { REGISTER_USER_ENDPOINT, UPDATE_USER_ENDPOINT } = env;
 
 export const addUserAdmin = async user => {
 	try {
 		const res = await axios.post(REGISTER_USER_ENDPOINT, user);
-		const { uid } = res.data;
 
-		const userAdminToCreate = {
-			...user,
-			id: uid,
-			role: 'admin',
-			plazas: [],
-			disabled: false,
-			createdAt: serverTimestamp(),
-			lastUpdate: serverTimestamp(),
-		};
+		if (res.status === 200) {
+			const { uid } = res.data;
 
-		await setDoc(doc(usersCollectionRef, uid), userAdminToCreate);
+			const userAdminToCreate = {
+				...user,
+				id: uid,
+				role: 'admin',
+				plazas: [],
+				disabled: false,
+				createdAt: serverTimestamp(),
+				lastUpdate: serverTimestamp(),
+			};
 
-		return userAdminToCreate;
+			await setDoc(doc(usersCollectionRef, uid), userAdminToCreate);
+
+			return userAdminToCreate;
+		}
 	} catch (error) {
 		console.error(error);
 	}
@@ -111,6 +114,7 @@ export const addNotification = async ({ userTenantId, notifDay }) => {
 
 		await updateDoc(userTenantDocRef, {
 			notifDays: arrayUnion(notifDay),
+			lastUpdate: serverTimestamp(),
 		});
 
 		return {
@@ -128,6 +132,7 @@ export const deleteNotification = async (userTenantId, notifDay) => {
 
 		await updateDoc(userTenantDocRef, {
 			notifDays: arrayRemove(notifDay),
+			lastUpdate: serverTimestamp(),
 		});
 	} catch (error) {
 		console.error(error);
@@ -138,7 +143,32 @@ export const addContactInfo = async (contactInfo, userTenantId) => {
 	try {
 		const userTenantDocRef = doc(db, 'users', userTenantId);
 
-		await updateDoc(userTenantDocRef, contactInfo);
+		await updateDoc(userTenantDocRef, {
+			...contactInfo,
+			lastUpdate: serverTimestamp(),
+		});
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const updateUserTenant = async (userTenant, userTenantId) => {
+	try {
+		const res = await axios.put(
+			`${UPDATE_USER_ENDPOINT}?userId=${userTenantId}`,
+			userTenant
+		);
+
+		if (res.status === 200) {
+			const userTenantDocRef = doc(db, 'users', userTenantId);
+
+			const userTenantToUpdate = {
+				...userTenant,
+				lastUpdate: serverTimestamp(),
+			};
+
+			await updateDoc(userTenantDocRef, userTenantToUpdate);
+		}
 	} catch (error) {
 		console.error(error);
 	}

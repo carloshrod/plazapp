@@ -15,7 +15,8 @@ const Store = () => {
 	const { storeId } = useParams();
 	const { showModal } = useUiContext();
 	const { loggedUser } = useAuthContext();
-	const { userAdmin, userTenant, setUserTenant } = useUsersContext();
+	const { userAdmin, userTenant, setUserTenant, setUserToEdit } =
+		useUsersContext();
 	const { plaza, store, setStore } = usePlazasContext();
 	const [showCalendar, setShowCalendar] = useState(false);
 
@@ -36,6 +37,7 @@ const Store = () => {
 	useEffect(() => {
 		fetchStore();
 		fetchUserTenant();
+		setUserToEdit({});
 	}, [storeId, store?.tenantId]);
 
 	const handleAddUserTenant = () => {
