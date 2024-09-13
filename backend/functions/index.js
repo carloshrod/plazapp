@@ -2,7 +2,11 @@ import admin from "firebase-admin";
 import { onRequest } from "firebase-functions/v2/https";
 import { pubsub } from "firebase-functions";
 import serviceAccount from "./plazapp-credentials.json" assert { type: "json" };
-import { accountCreated, notification } from "./utils/template.js";
+import {
+  accountCreated,
+  accountUpdated,
+  notification,
+} from "./utils/template.js";
 import { transporter } from "./utils/nodemailer.js";
 import { generatePassword } from "./utils/generatePassword.js";
 
@@ -26,24 +30,27 @@ export const registerUser = onRequest(async (req, res) => {
 
     const userRecord = await admin.auth().createUser(userToRegister);
 
-    const mailOptions = {
-      from: `"Admin" ${process.env.EMAIL}`,
-      to: email,
-      subject: "Cuenta creada - Plazapp",
-      html: accountCreated(userToRegister),
-    };
+    if (userRecord) {
+      const mailOptions = {
+        from: `"Admin" ${process.env.EMAIL}`,
+        to: email,
+        subject: "Cuenta creada - Plazapp",
+        html: accountCreated(userToRegister),
+      };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Correo enviado: " + info.response);
-      }
-    });
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Correo enviado: " + info.response);
+        }
+      });
 
-    return res
-      .status(200)
-      .json({ uid: userRecord.uid, message: "Usuario registrado con éxito!" });
+      return res.status(200).json({
+        uid: userRecord.uid,
+        message: "Usuario registrado con éxito!",
+      });
+    }
   } catch (error) {
     console.error(error);
     res.status(400).json(error);
@@ -57,18 +64,32 @@ export const updateUser = onRequest(async (req, res) => {
 
   try {
     const { userId } = req.query;
-    const { email, displayName } = req.body;
+    const { email, name } = req.body;
 
-    const userRecord = await admin
-      .auth()
-      .updateUser(userId, { email, displayName });
+    const userToUpdate = { email, displayName: name };
+
+    const userRecord = await admin.auth().updateUser(userId, userToUpdate);
 
     if (userRecord) {
+      const mailOptions = {
+        from: `"Admin" ${process.env.EMAIL}`,
+        to: email,
+        subject: "Cuenta actualizada - Plazapp",
+        html: accountUpdated(userToUpdate),
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Correo enviado: " + info.response);
+        }
+      });
+
       return res
         .status(200)
         .json({ message: "Usuario actualizado con éxito!" });
     }
-    return res.status(400).send();
   } catch (error) {
     res.status(400).send(error.message);
   }

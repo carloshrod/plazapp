@@ -103,3 +103,55 @@ export const accountCreated = (user) => {
 </html>
     `;
 };
+
+export const accountUpdated = (user) => {
+  const { displayName, email } = user;
+
+  return `
+      <!DOCTYPE html>
+      <html lang="es">
+  
+      <head>
+          <meta charset="UTF-8">
+          <title>Notificación</title>
+          <style>
+          body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f5f5f5;
+          }
+  
+          .container {
+          width: 80%;
+          margin: auto;
+          overflow: hidden;
+          }
+  
+          h3 {
+          margin-bottom: 2rem;
+          }
+  
+          .content {
+          margin-bottom: 2rem;
+          }
+  
+          .description {
+          font-weight: 600;
+          font-style: italic;
+          }
+      </style>
+      </head>
+  
+      <body>
+      <div class="container">
+          <h3>Señor(a) ${displayName},</h3>
+          <section class="content">
+          <p>Su cuenta ha sido actualizada. De ahora en adelante podrá iniciar sesión con el email ${email} y la contraseña que ya tiene configurada.</p>
+          <p>Cordialmente,</p>
+          <p>El equipo de Plazapp</p>
+      </div>
+      </body>
+  </html>
+      `;
+};
