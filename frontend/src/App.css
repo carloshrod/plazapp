@@ -50,11 +50,12 @@ a {
   color: #00008B;
 }
 
-.btn-outline-primary:hover {
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
   background-color: #0000CB !important;
   border-color: #0000CB !important;
+  color: #fff;
 }
-
 
 /* Secondary */
 .btn-secondary {
