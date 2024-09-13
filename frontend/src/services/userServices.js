@@ -156,12 +156,20 @@ export const addContactInfo = async (contactInfo, userTenantId) => {
 
 export const updateUserTenant = async (userTenant, userTenantId) => {
 	try {
-		const res = await axios.put(
-			`${UPDATE_USER_ENDPOINT}?userId=${userTenantId}`,
-			userTenant
-		);
+		const existentUser = await getOneUser(userTenantId);
 
-		if (res.status === 200) {
+		let res;
+		if (
+			existentUser.email !== userTenant.email ||
+			existentUser.name !== userTenant.name
+		) {
+			res = await axios.put(
+				`${UPDATE_USER_ENDPOINT}?userId=${userTenantId}`,
+				userTenant
+			);
+		}
+
+		if (res?.status !== 400) {
 			const userTenantDocRef = doc(db, 'users', userTenantId);
 
 			const userTenantToUpdate = {

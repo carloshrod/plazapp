@@ -101,12 +101,13 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 			if (!userTenantId) {
 				const createdUserTenant = await addUserTenant(form, storeId);
 				console.log('Locatario agregado con éxito!');
+				hideModal();
 				return createdUserTenant;
 			} else {
 				await updateUserTenant(form, userTenantId);
 				console.log('Locatario actualizado con éxito!');
+				hideModal();
 			}
-			hideModal();
 		} catch (error) {
 			console.error(error);
 		} finally {

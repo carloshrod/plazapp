@@ -3,6 +3,7 @@ import SubmitButton from '../../ui/SubmitButton';
 import useForm from '../../../hooks/useForm';
 import { USER_INPUTS } from '../../../utils/consts';
 import useUsersContext from '../../../hooks/useUsersContext';
+import { useParams } from 'react-router-dom';
 
 const initialForm = {
 	name: '',
@@ -10,13 +11,23 @@ const initialForm = {
 };
 
 const UserForm = () => {
-	const { form, loading, handleChange, handleSubmitUserAdmin } =
-		useForm(initialForm);
+	const {
+		form,
+		loading,
+		handleChange,
+		handleSubmitUserAdmin,
+		handleSubmitUserTenant,
+	} = useForm(initialForm);
 	const { dispatchUserAdmins, setUserTenant } = useUsersContext();
+	const { storeId } = useParams();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		const newUser = await handleSubmitUserAdmin();
+
+		const newUser = !storeId
+			? await handleSubmitUserAdmin()
+			: await handleSubmitUserTenant();
+
 		if (newUser?.role === 'admin') {
 			dispatchUserAdmins(newUser);
 		} else {

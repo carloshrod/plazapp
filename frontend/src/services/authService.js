@@ -36,8 +36,6 @@ export const changePassword = async (
 			if (!loggedUser.passwordChanged) {
 				const userTenantDocRef = doc(db, 'users', loggedUser.id);
 
-				console.log(userTenantDocRef);
-
 				const userTenantToUpdate = {
 					passwordChanged: true,
 					lastUpdate: serverTimestamp(),
