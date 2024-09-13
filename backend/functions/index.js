@@ -10,8 +10,11 @@ admin.initializeApp({
 });
 
 export const registerUser = onRequest(async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Método no permitido" });
+  }
+
   try {
-    console.log(req.body);
     const { email, name } = req.body;
 
     const userRecord = await admin.auth().createUser({
@@ -29,10 +32,35 @@ export const registerUser = onRequest(async (req, res) => {
   }
 });
 
+export const updateUser = onRequest(async (req, res) => {
+  if (req.method !== "PUT") {
+    return res.status(405).json({ message: "Método no permitido" });
+  }
+
+  try {
+    const { userId } = req.query;
+    console.log(userId);
+    const { email, displayName } = req.body;
+
+    const userRecord = await admin
+      .auth()
+      .updateUser(userId, { email, displayName });
+
+    if (userRecord) {
+      return res
+        .status(200)
+        .json({ message: "Usuario actualizado con éxito!" });
+    }
+    return res.status(400).send();
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
 export const executeSendingNotifications = pubsub
-  .schedule("51 9 * * *") // minuto(0-59) | hora(0-23) | día_del_mes(0-31) | mes(1-12) | día_de_la_semana(0-6 / Dom = 0)
+  .schedule("0 12 * * *") // minuto(0-59) | hora(0-23) | día_del_mes(0-31) | mes(1-12) | día_de_la_semana(0-6 / Dom = 0)
   .timeZone("America/Mexico_City") // America/Mexico_City
-  .onRun(async (context) => {
+  .onRun(async (_context) => {
     console.log("Ejecutando envío de notificaciones!");
 
     const now = new Date();
