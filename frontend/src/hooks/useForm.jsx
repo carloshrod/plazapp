@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { signIn } from '../services/authService';
+import { changePassword, resetPassword, signIn } from '../services/authService';
 import {
 	addContactInfo,
 	addUserAdmin,
@@ -9,11 +9,13 @@ import {
 import useUiContext from './useUiContext';
 import { addPlaza, addStore } from '../services/plazasService';
 import { useParams } from 'react-router-dom';
+import useAuthContext from './useAuthContext';
 
 const useForm = (initialForm, dataToEdit = undefined) => {
 	const [form, setForm] = useState(initialForm);
 	const [loading, setLoading] = useState(false);
-	const { hideModal } = useUiContext();
+	const { loggedUser } = useAuthContext();
+	const { hideModal, hideDrawer } = useUiContext();
 	const { adminId, plazaId, storeId } = useParams();
 
 	useEffect(() => {
@@ -35,11 +37,15 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 		});
 	};
 
-	const handleSubmitLogin = async event => {
-		event.preventDefault();
+	const handleSubmitLogin = async () => {
 		try {
 			setLoading(true);
-			await signIn(form.email, form.password);
+			if ('password' in form) {
+				await signIn(form);
+			} else {
+				await resetPassword(form);
+				console.log('Link enviado al correo con éxito!');
+			}
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -120,6 +126,20 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 		}
 	};
 
+	const handleSubmitPassword = async event => {
+		event.preventDefault();
+		try {
+			setLoading(true);
+			await changePassword(form, loggedUser);
+			console.log('Contraseña actualizada con éxito!');
+			hideDrawer();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return {
 		form,
 		loading,
@@ -130,6 +150,7 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 		handleSubmitStore,
 		handleSubmitContactInfo,
 		handleSubmitUserTenant,
+		handleSubmitPassword,
 	};
 };
 

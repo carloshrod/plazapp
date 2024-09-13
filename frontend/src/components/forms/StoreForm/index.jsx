@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { STORE_INPUTS } from '../../../utils/consts';
 import useForm from '../../../hooks/useForm';
-import SubmitButton from '../SubmitButton';
+import SubmitButton from '../../ui/SubmitButton';
 import usePlazasContext from '../../../hooks/usePlazasContext';
 
 const initialForm = {

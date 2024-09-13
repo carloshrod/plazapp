@@ -32,6 +32,7 @@ export const addUserAdmin = async user => {
 				role: 'admin',
 				plazas: [],
 				disabled: false,
+				passwordChanged: false,
 				createdAt: serverTimestamp(),
 				lastUpdate: serverTimestamp(),
 			};
@@ -81,6 +82,7 @@ export const addUserTenant = async (user, storeId) => {
 			storeId,
 			notifDays: [],
 			disabled: false,
+			passwordChanged: false,
 			createdAt: serverTimestamp(),
 			lastUpdate: serverTimestamp(),
 		};

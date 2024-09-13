@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import SubmitButton from '../SubmitButton';
+import SubmitButton from '../../ui/SubmitButton';
 import useForm from '../../../hooks/useForm';
 import { PLAZA_INPUTS } from '../../../utils/consts';
 import usePlazasContext from '../../../hooks/usePlazasContext';

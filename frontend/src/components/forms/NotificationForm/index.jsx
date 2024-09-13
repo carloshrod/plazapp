@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import useUsersContext from '../../../hooks/useUsersContext';
 import useUiContext from '../../../hooks/useUiContext';
 import { addNotification } from '../../../services/userServices';
-import SubmitButton from '../SubmitButton';
+import SubmitButton from '../../ui/SubmitButton';
 import { useState } from 'react';
 
 const NotificationForm = ({ selectedDate }) => {

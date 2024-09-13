@@ -8,7 +8,7 @@ const CustomModal = () => {
 	return (
 		<Modal show={isOpen} onHide={hideModal} centered>
 			<Modal.Header closeButton>
-				<Modal.Title>{title}</Modal.Title>
+				<Modal.Title className='ms-3 text-primary'>{title}</Modal.Title>
 			</Modal.Header>
 			{children}
 		</Modal>

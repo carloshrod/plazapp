@@ -2,8 +2,9 @@ import admin from "firebase-admin";
 import { onRequest } from "firebase-functions/v2/https";
 import { pubsub } from "firebase-functions";
 import serviceAccount from "./plazapp-credentials.json" assert { type: "json" };
-import { notification } from "./utils/template.js";
+import { accountCreated, notification } from "./utils/template.js";
 import { transporter } from "./utils/nodemailer.js";
+import { generatePassword } from "./utils/generatePassword.js";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -17,10 +18,27 @@ export const registerUser = onRequest(async (req, res) => {
   try {
     const { email, name } = req.body;
 
-    const userRecord = await admin.auth().createUser({
+    const userToRegister = {
       email,
       displayName: name,
-      password: "Test1234",
+      password: generatePassword(8),
+    };
+
+    const userRecord = await admin.auth().createUser(userToRegister);
+
+    const mailOptions = {
+      from: `"Admin" ${process.env.EMAIL}`,
+      to: email,
+      subject: "Cuenta creada - Plazapp",
+      html: accountCreated(userToRegister),
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Correo enviado: " + info.response);
+      }
     });
 
     return res
@@ -39,7 +57,6 @@ export const updateUser = onRequest(async (req, res) => {
 
   try {
     const { userId } = req.query;
-    console.log(userId);
     const { email, displayName } = req.body;
 
     const userRecord = await admin
@@ -110,7 +127,7 @@ export const executeSendingNotifications = pubsub
       const data = doc.data();
       console.log(data.email);
       const email = data.email;
-      const subject = "Notificación Diaria";
+      const subject = "Notificación Diaria - Plazapp";
 
       const mailOptions = {
         from: `"Admin" ${process.env.EMAIL}`,

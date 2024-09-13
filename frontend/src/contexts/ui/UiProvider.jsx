@@ -7,8 +7,15 @@ const initialModal = {
 	children: null,
 };
 
+const initialDrawer = {
+	show: false,
+	title: '',
+	children: null,
+};
+
 const UiProvider = ({ children }) => {
 	const [modal, setModal] = useState(initialModal);
+	const [drawer, setDrawer] = useState(initialDrawer);
 
 	const showModal = ({ title, children }) => {
 		setModal({
@@ -22,7 +29,19 @@ const UiProvider = ({ children }) => {
 		setModal(initialModal);
 	};
 
-	const data = { modal, showModal, hideModal };
+	const showDrawer = ({ title, children }) => {
+		setDrawer({
+			show: true,
+			title,
+			children,
+		});
+	};
+
+	const hideDrawer = () => {
+		setDrawer(initialDrawer);
+	};
+
+	const data = { modal, showModal, hideModal, drawer, showDrawer, hideDrawer };
 
 	return <UiContext.Provider value={data}>{children}</UiContext.Provider>;
 };

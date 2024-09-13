@@ -7,8 +7,16 @@ export const LOGIN_INPUTS = [
 	{
 		id: 'idPassword',
 		name: 'password',
-		label: 'Password',
+		label: 'Contraseña',
 		type: 'password',
+	},
+];
+
+export const FORGOT_PASSWORD_INPUTS = [
+	{
+		id: 'idEmail',
+		name: 'email',
+		label: 'Email',
 	},
 ];
 
@@ -89,5 +97,18 @@ export const CONTACT_INFO_INPUTS = [
 		id: 'idGuarantorPhone',
 		name: 'guarantorPhone',
 		label: 'N° de teléfono',
+	},
+];
+
+export const PASSWORD_INPUTS = [
+	{
+		id: 'idCurrentPassword',
+		name: 'currentPassword',
+		label: 'Contraseña actual',
+	},
+	{
+		id: 'idNewPassword',
+		name: 'newPassword',
+		label: 'Contraseña nueva',
 	},
 ];
