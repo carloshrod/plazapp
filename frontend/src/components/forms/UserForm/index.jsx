@@ -10,13 +10,13 @@ const initialForm = {
 };
 
 const UserForm = () => {
-	const { form, loading, handleChange, handleSubmitUser } =
+	const { form, loading, handleChange, handleSubmitUserAdmin } =
 		useForm(initialForm);
 	const { dispatchUserAdmins, setUserTenant } = useUsersContext();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		const newUser = await handleSubmitUser();
+		const newUser = await handleSubmitUserAdmin();
 		if (newUser?.role === 'admin') {
 			dispatchUserAdmins(newUser);
 		} else {
@@ -32,7 +32,7 @@ const UserForm = () => {
 					<Form.Control
 						name={name}
 						type='text'
-						value={form[name].value}
+						value={form[name]}
 						onChange={handleChange}
 						required
 					/>

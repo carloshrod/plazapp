@@ -28,7 +28,7 @@ const PlazasForm = () => {
 					<Form.Control
 						name={name}
 						type={type ?? 'text'}
-						value={form[name].value}
+						value={form[name]}
 						onChange={handleChange}
 						required
 					/>
