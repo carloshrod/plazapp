@@ -44,6 +44,10 @@ a {
   background-color: #00008B !important;
 }
 
+.border-primary {
+  border-color: #00008B !important;
+}
+
 /* Outline Primary */
 .btn-outline-primary {
   border-color: #00008B;
