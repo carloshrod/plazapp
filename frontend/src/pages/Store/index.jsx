@@ -6,7 +6,12 @@ import useUsersContext from '../../hooks/useUsersContext';
 import usePlazasContext from '../../hooks/usePlazasContext';
 import { getOneStore } from '../../services/plazasService';
 import { useEffect, useState } from 'react';
-import { CustomCalendar, TenantInfo, UserForm } from '../../components';
+import {
+	CustomCalendar,
+	Documents,
+	TenantInfo,
+	UserForm,
+} from '../../components';
 import useUiContext from '../../hooks/useUiContext';
 import { getOneUser } from '../../services/userServices';
 import useAuthContext from '../../hooks/useAuthContext';
@@ -63,8 +68,8 @@ const Store = () => {
 			) : null}
 			{!showCalendar ? (
 				<div className='bg-secondary p-4 rounded'>
-					<div className='d-flex justify-content-between align-items-center'>
-						<h3 className='px-3 mb-0 fw-bold'>{store.name}</h3>
+					<div className='d-flex justify-content-between align-items-center px-2'>
+						<h3 className='mb-0 fw-bold'>{store.name}</h3>
 						{userTenant?.email ? (
 							<h4>{userTenant?.email}</h4>
 						) : (
@@ -78,6 +83,7 @@ const Store = () => {
 						)}
 					</div>
 					{loggedUser.role !== 'tenant' ? <TenantInfo /> : null}
+					<Documents />
 				</div>
 			) : (
 				<CustomCalendar storeName={store.name} />

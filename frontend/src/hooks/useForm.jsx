@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { changePassword, resetPassword, signIn } from '../services/authService';
 import {
 	addContactInfo,
@@ -6,14 +7,15 @@ import {
 	addUserTenant,
 	updateUserTenant,
 } from '../services/userServices';
-import useUiContext from './useUiContext';
 import { addPlaza, addStore } from '../services/plazasService';
-import { useParams } from 'react-router-dom';
+import { uploadDocument } from '../services/documentServices';
+import useUiContext from './useUiContext';
 import useAuthContext from './useAuthContext';
 
 const useForm = (initialForm, dataToEdit = undefined) => {
 	const [form, setForm] = useState(initialForm);
 	const [loading, setLoading] = useState(false);
+	const [file, setFile] = useState(null);
 	const { loggedUser } = useAuthContext();
 	const { hideModal, hideDrawer } = useUiContext();
 	const { adminId, plazaId, storeId } = useParams();
@@ -35,6 +37,21 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 			...form,
 			[name]: value,
 		});
+	};
+
+	const handleFileChange = event => {
+		if (event.target.files && event.target.files.length > 0) {
+			const file = event.target.files[0];
+
+			if (
+				file.type === 'application/pdf' ||
+				file.name.toLowerCase().endsWith('.pdf')
+			) {
+				setFile(file);
+			} else {
+				console.warn(`Solo se permiten archivos PDF. Seleccionó: ${file.name}`);
+			}
+		}
 	};
 
 	const handleSubmitLogin = async () => {
@@ -141,10 +158,29 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 		}
 	};
 
+	const handleSubmitDocument = async userId => {
+		try {
+			setLoading(true);
+			await uploadDocument({
+				userId,
+				file,
+				docName: form.docName,
+				docType: form.docType,
+			});
+			hideModal();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return {
 		form,
 		loading,
+		file,
 		handleChange,
+		handleFileChange,
 		handleSubmitLogin,
 		handleSubmitUserAdmin,
 		handleSubmitPlaza,
@@ -152,6 +188,7 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 		handleSubmitContactInfo,
 		handleSubmitUserTenant,
 		handleSubmitPassword,
+		handleSubmitDocument,
 	};
 };
 

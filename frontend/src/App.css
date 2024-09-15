@@ -113,3 +113,26 @@ a {
 .bg-info {
   background-color: #87CEEB !important;
 }
+
+/* Navs */
+
+.nav-tabs {
+  border-color: #00008b48 !important;
+}
+
+.nav-link {
+  color: #00008B !important;
+  font-weight: 400;
+}
+
+.nav-link:hover {
+  border-color: transparent !important;
+  background-color: #00008b48 !important;
+}
+
+.nav-link.active {
+  background-color: #00008b48 !important;
+  color: #00008B !important;
+  font-weight: 700;
+  border-color: #00008b48 !important;
+}
