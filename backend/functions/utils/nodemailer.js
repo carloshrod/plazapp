@@ -8,4 +8,7 @@ export const transporter = createTransport({
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   },
+  tls: {
+    rejectUnauthorized: process.env.NODE_ENV === "production",
+  },
 });
