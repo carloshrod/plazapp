@@ -1,8 +1,8 @@
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
-const storage = getStorage();
+export const storage = getStorage();
 
-export const generateImageURL = async ({ file, docType }) => {
+export const generateDocURL = async ({ file, docType }) => {
 	const now = new Date();
 	const formattedDate = now
 		.toISOString()
@@ -16,8 +16,7 @@ export const generateImageURL = async ({ file, docType }) => {
 	const imageSnapshot = await uploadBytes(storageRef, file);
 
 	if (!imageSnapshot) throw new Error('Ocurrió un error al subir la imágen!');
+	const fileUrl = await getDownloadURL(imageSnapshot.ref);
 
-	const imageUrl = await getDownloadURL(imageSnapshot.ref);
-
-	return imageUrl;
+	return { fileUrl: fileUrl, filePath: imageSnapshot.metadata.fullPath };
 };

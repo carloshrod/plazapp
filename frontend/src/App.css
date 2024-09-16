@@ -136,3 +136,15 @@ a {
   font-weight: 700;
   border-color: #00008b48 !important;
 }
+
+/* Form switch */
+.form-switch,
+.form-check-input,
+.form-check-label {
+  cursor: pointer !important;
+}
+
+.form-check-input:checked {
+  background-color: #198754 !important;
+  border-color: #198754 !important;
+}

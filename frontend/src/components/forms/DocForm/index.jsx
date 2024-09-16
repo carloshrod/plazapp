@@ -14,7 +14,7 @@ const initialForm = {
 	docName: '',
 };
 
-const DocForm = () => {
+const DocForm = ({ getDocs }) => {
 	const {
 		form,
 		file,
@@ -28,6 +28,7 @@ const DocForm = () => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 		await handleSubmitDocument(userTenant?.id);
+		await getDocs();
 	};
 
 	return (

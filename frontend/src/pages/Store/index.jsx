@@ -83,7 +83,7 @@ const Store = () => {
 						)}
 					</div>
 					{loggedUser.role !== 'tenant' ? <TenantInfo /> : null}
-					<Documents />
+					{userTenant?.email ? <Documents /> : null}
 				</div>
 			) : (
 				<CustomCalendar storeName={store.name} />

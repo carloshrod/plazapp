@@ -253,3 +253,33 @@ export const MONTHLY_DOCS_OPTIONS = [
 		label: 'Diciembre',
 	},
 ];
+
+export const GEN_DOCS_DICTIONARY = {
+	'Documento 1': 1,
+	'Documento 2': 2,
+	'Documento 3': 3,
+	'Documento 4': 4,
+	'Documento 5': 5,
+	'Documento 6': 6,
+	'Documento 7': 7,
+	'Documento 8': 8,
+	'Documento 9': 9,
+	'Documento 10': 10,
+	'Documento 11': 11,
+	'Documento 12': 12,
+};
+
+export const MONTHS_DICTIONARY = {
+	Enero: 1,
+	Febrero: 2,
+	Marzo: 3,
+	Abril: 4,
+	Mayo: 5,
+	Junio: 6,
+	Julio: 7,
+	Agosto: 8,
+	Septiembre: 9,
+	Octubre: 10,
+	Noviembre: 11,
+	Diciembre: 12,
+};
