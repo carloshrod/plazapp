@@ -283,3 +283,22 @@ export const MONTHS_DICTIONARY = {
 	Noviembre: 11,
 	Diciembre: 12,
 };
+
+export const TYPE_DOCS_OPTIONS = [
+	{
+		value: 'contrato-de-arrendamiento',
+		label: 'Contrato de arrendamiento',
+	},
+	{
+		value: 'convenio-de-terminación',
+		label: 'Convenio de terminación',
+	},
+	{
+		value: 'recibo-de-pago',
+		label: 'Recibo de pago',
+	},
+	{
+		value: 'recibo-de-deposito-en-garantia',
+		label: 'Recibo de depósito en garantía',
+	},
+];

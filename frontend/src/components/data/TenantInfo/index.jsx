@@ -1,15 +1,19 @@
-import { Button } from 'react-bootstrap';
+import { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
 import { MdEmail, MdLocalPhone, MdLocationPin } from 'react-icons/md';
-
 import useUsersContext from '../../../hooks/useUsersContext';
 import usePlazasContext from '../../../hooks/usePlazasContext';
 import ContactInfoForm from '../../forms/ContactInfoForm';
 import useUiContext from '../../../hooks/useUiContext';
+import { TYPE_DOCS_OPTIONS } from '../../../utils/consts';
+import PDFDocument from '../PDFDocument';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const TenantInfo = () => {
 	const { showModal } = useUiContext();
 	const { userTenant, setUserToEdit } = useUsersContext();
 	const { store } = usePlazasContext();
+	const [docType, setDocType] = useState('');
 
 	const handleAddContactInfo = () => {
 		setUserToEdit(userTenant);
@@ -90,6 +94,36 @@ const TenantInfo = () => {
 						</section>
 					) : null}
 				</div>
+			</div>
+			<div style={{ width: 300 }}>
+				<Button
+					className='my-3'
+					disabled={!docType || docType === 'Seleccionar...'}
+				>
+					<PDFDownloadLink
+						document={<PDFDocument docType={docType} userTenant={userTenant} />}
+						fileName={`${docType}.pdf`}
+						className='text-white'
+					>
+						{({ loading }) =>
+							loading ? 'Generando documento...' : 'Generar documento'
+						}
+					</PDFDownloadLink>
+				</Button>
+
+				<Form.Group>
+					<Form.Label className='fw-semibold'>
+						Tipo de documento a generar
+					</Form.Label>
+					<Form.Select onChange={e => setDocType(e.target.value)} required>
+						<option>Seleccionar...</option>
+						{TYPE_DOCS_OPTIONS.map(doc => (
+							<option key={doc.value} value={doc.value}>
+								{doc.label}
+							</option>
+						))}
+					</Form.Select>
+				</Form.Group>
 			</div>
 		</section>
 	);
