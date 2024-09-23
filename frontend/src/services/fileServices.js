@@ -2,7 +2,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 export const storage = getStorage();
 
-export const generateDocURL = async ({ file, docType }) => {
+export const generateDocFileData = async ({ file, docType }) => {
 	const now = new Date();
 	const formattedDate = now
 		.toISOString()

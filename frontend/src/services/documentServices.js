@@ -15,7 +15,7 @@ import {
 	where,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { generateDocURL, storage } from './fileServices';
+import { generateDocFileData, storage } from './fileServices';
 import { deleteObject, ref } from 'firebase/storage';
 import { GEN_DOCS_DICTIONARY, MONTHS_DICTIONARY } from '../utils/consts';
 
@@ -56,7 +56,7 @@ export const uploadDocument = async ({ userId, file, docName, docType }) => {
 
 		let fileData;
 		if (file) {
-			fileData = await generateDocURL({ file, docType });
+			fileData = await generateDocFileData({ file, docType });
 		} else {
 			console.error(`Error: No hay archivo para procesar.`);
 			return;
