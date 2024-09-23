@@ -1,7 +1,9 @@
 import { MdEmail } from 'react-icons/md';
 import { PassworForm } from '../..';
+import useAuthContext from '../../../hooks/useAuthContext';
 
-const UserProfile = ({ loggedUser }) => {
+const UserProfile = () => {
+	const { loggedUser } = useAuthContext();
 	const { name, email, passwordChanged, role } = loggedUser;
 
 	return (

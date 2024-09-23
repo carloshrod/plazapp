@@ -1,15 +1,19 @@
+import { useEffect } from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { FaChevronLeft } from 'react-icons/fa';
-import { Header, CustomModal } from '../../';
-import useAuthContext from '../../../hooks/useAuthContext';
+import {
+	Header,
+	CustomModal,
+	Drawer,
+	TermsNotification,
+	PasswordNotification,
+} from '../../';
 import UsersProvider from '../../../contexts/users/UsersProvider';
 import PlazasProvider from '../../../contexts/plazas/PlazasProvider';
-import { PATHS } from '../../../utils/paths';
-import { useEffect } from 'react';
+import useAuthContext from '../../../hooks/useAuthContext';
 import useUiContext from '../../../hooks/useUiContext';
-import Drawer from '../../layout/Drawer';
-import PasswordNotification from '../../ui/PasswordNotification';
+import { PATHS } from '../../../utils/paths';
 
 const { LOGIN, SUPERADMIN, ADMIN, TENANT } = PATHS;
 
@@ -21,17 +25,21 @@ const PrivateRoutes = () => {
 	let initialRoute = SUPERADMIN;
 
 	useEffect(() => {
-		if (
-			loggedUser &&
-			loggedUser?.role !== 'superadmin' &&
-			!loggedUser?.passwordChanged
-		) {
-			showModal({
-				title: 'Actualiza tu contraseña',
-				children: <PasswordNotification loggedUser={loggedUser} />,
-			});
+		if (loggedUser && loggedUser?.role !== 'superadmin') {
+			if (!loggedUser?.termsAccepted) {
+				showModal({
+					title: 'Acepta los términos y condiciones',
+					children: <TermsNotification />,
+					onHide: false,
+				});
+			} else if (loggedUser?.termsAccepted && !loggedUser?.passwordChanged) {
+				showModal({
+					title: 'Actualiza tu contraseña',
+					children: <PasswordNotification />,
+				});
+			}
 		}
-	}, []);
+	}, [loggedUser?.termsAccepted]);
 
 	if (!isAuth) {
 		return <Navigate to={LOGIN} replace />;

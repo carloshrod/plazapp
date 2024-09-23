@@ -3,11 +3,11 @@ import useUiContext from '../../../hooks/useUiContext';
 
 const CustomModal = () => {
 	const { modal, hideModal } = useUiContext();
-	const { isOpen, title, children } = modal;
+	const { isOpen, title, children, onHide } = modal;
 
 	return (
-		<Modal show={isOpen} onHide={hideModal} centered>
-			<Modal.Header closeButton>
+		<Modal show={isOpen} onHide={onHide ? () => hideModal() : null} centered>
+			<Modal.Header closeButton={onHide}>
 				<Modal.Title className='ms-3 text-primary'>{title}</Modal.Title>
 			</Modal.Header>
 			{children}

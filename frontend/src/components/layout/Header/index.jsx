@@ -14,7 +14,7 @@ const Header = () => {
 	const handleDrawer = () => {
 		showDrawer({
 			title: 'Mi Perfil',
-			children: <UserProfile loggedUser={loggedUser} />,
+			children: <UserProfile />,
 		});
 	};
 

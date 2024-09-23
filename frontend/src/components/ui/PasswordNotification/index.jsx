@@ -1,8 +1,10 @@
 import { Button } from 'react-bootstrap';
 import useUiContext from '../../../hooks/useUiContext';
 import UserProfile from '../../data/UserProfile';
+import useAuthContext from '../../../hooks/useAuthContext';
 
-const PasswordNotification = ({ loggedUser }) => {
+const PasswordNotification = () => {
+	const { loggedUser } = useAuthContext();
 	const { hideModal, showDrawer } = useUiContext();
 
 	const handleUpdatePassword = () => {
@@ -20,10 +22,10 @@ const PasswordNotification = ({ loggedUser }) => {
 				cuenta. Por razones de seguridad, es importante que la cambies ahora.
 			</p>
 			<div className='d-flex gap-5 px-5 pb-4'>
-				<Button className='w-50' onClick={handleUpdatePassword}>
+				<Button className='w-50 fw-bold' onClick={handleUpdatePassword}>
 					ACTUALIZAR
 				</Button>
-				<Button className='w-50' variant='danger' onClick={hideModal}>
+				<Button className='w-50 fw-bold' variant='danger' onClick={hideModal}>
 					CANCELAR
 				</Button>
 			</div>

@@ -5,6 +5,7 @@ const initialModal = {
 	isOpen: false,
 	title: '',
 	children: null,
+	onHide: true,
 };
 
 const initialDrawer = {
@@ -17,11 +18,12 @@ const UiProvider = ({ children }) => {
 	const [modal, setModal] = useState(initialModal);
 	const [drawer, setDrawer] = useState(initialDrawer);
 
-	const showModal = ({ title, children }) => {
+	const showModal = ({ title, children, onHide = true }) => {
 		setModal({
 			isOpen: true,
 			title,
 			children,
+			onHide,
 		});
 	};
 

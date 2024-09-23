@@ -33,6 +33,7 @@ export const addUserAdmin = async user => {
 				plazas: [],
 				disabled: false,
 				passwordChanged: false,
+				termsAccepted: false,
 				createdAt: serverTimestamp(),
 				lastUpdate: serverTimestamp(),
 			};
@@ -179,6 +180,19 @@ export const updateUserTenant = async (userTenant, userTenantId) => {
 
 			await updateDoc(userTenantDocRef, userTenantToUpdate);
 		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const acceptTerms = async userId => {
+	try {
+		const userTenantDocRef = doc(db, 'users', userId);
+
+		await updateDoc(userTenantDocRef, {
+			termsAccepted: true,
+			lastUpdate: serverTimestamp(),
+		});
 	} catch (error) {
 		console.error(error);
 	}

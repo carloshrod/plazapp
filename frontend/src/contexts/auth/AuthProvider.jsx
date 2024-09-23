@@ -5,7 +5,7 @@ import { auth, db } from '../../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 const AuthProvider = ({ children }) => {
-	const [loggedUser, setloggedUser] = useState(null);
+	const [loggedUser, setLoggedUser] = useState(null);
 	const [isAuth, setIsAuth] = useState(false);
 
 	useEffect(() => {
@@ -13,10 +13,10 @@ const AuthProvider = ({ children }) => {
 			try {
 				if (currentUser) {
 					const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-					setloggedUser(userDoc.data());
+					setLoggedUser(userDoc.data());
 					setIsAuth(true);
 				} else {
-					setloggedUser(null);
+					setLoggedUser(null);
 					setIsAuth(false);
 				}
 			} catch (error) {
@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
 		});
 	}, []);
 
-	const data = { isAuth, loggedUser };
+	const data = { isAuth, loggedUser, setLoggedUser };
 
 	return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };
