@@ -31,6 +31,15 @@ const TenantInfo = () => {
 		});
 	};
 
+	// const TEMPLATES = {
+	// 	'contrato-de-arrendamiento': (
+	// 		<Plantilla1 docType={docType} userTenant={userTenant} />
+	// 	),
+	// 	'convenio-de-terminación': (
+	// 		<Plantilla2 docType={docType} userTenant={userTenant} />
+	// 	),
+	// };
+
 	return (
 		<section className='px-3'>
 			{userTenant?.email ? (
@@ -101,6 +110,7 @@ const TenantInfo = () => {
 					disabled={!docType || docType === 'Seleccionar...'}
 				>
 					<PDFDownloadLink
+						// document={TEMPLATES[docType]}
 						document={<PDFDocument docType={docType} userTenant={userTenant} />}
 						fileName={`${docType}.pdf`}
 						className='text-white'

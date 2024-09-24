@@ -54,7 +54,7 @@ const TermsNotification = () => {
 					)}
 				</Button>
 				<Button className='w-50 fw-bold' variant='danger' onClick={logout}>
-					CANCELAR
+					RECHAZAR
 				</Button>
 			</div>
 		</section>

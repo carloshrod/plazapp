@@ -29,7 +29,26 @@ const styles = StyleSheet.create({
 	},
 });
 
+const INFO_DATA = {
+	'contrato-de-arrendamiento': {
+		parrafo1: `Parrafo 1 arrendamiento, Lorem ipsum dolor sit amet consectetur adipisicing elit. In cumque
+						aperiam nisi Numquam neque dolorem voluptatum repellat fugiat
+						suscipit, commodi hic consequatur, incidunt assumenda similique
+						blanditiis praesentium ipsa libero laboriosam.`,
+		parrafo2: `Parrafo 2 arrendamiento Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet earum
+						magnam repellendus deserunt vero, cupiditate omnis iusto
+						Consequuntur quisquam cumque quidem officiis, mollitia culpa qui
+						harum, sint impedit velit similique`,
+	},
+	'convenio-de-terminación': {
+		parrafo1: 'Parrafo 1 convenio',
+		parrafo2: 'Parrafo 2 convenio',
+	},
+};
+
 const PDFDocument = ({ docType, userTenant }) => {
+	const data = INFO_DATA[docType] ?? {};
+
 	return (
 		<Document>
 			<Page style={styles.page}>
@@ -59,18 +78,8 @@ const PDFDocument = ({ docType, userTenant }) => {
 						El Proveedor se compromete a realizar los servicios detallados a
 						continuación de forma diligente y profesional:
 					</Text>
-					<Text style={styles.paragraph}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. In cumque
-						aperiam nisi? Numquam neque dolorem voluptatum repellat fugiat
-						suscipit, commodi hic consequatur, incidunt assumenda similique
-						blanditiis praesentium ipsa libero laboriosam.
-					</Text>
-					<Text style={styles.paragraph}>
-						Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet earum
-						magnam repellendus deserunt vero, cupiditate omnis iusto?
-						Consequuntur quisquam cumque quidem officiis, mollitia culpa qui
-						harum, sint impedit velit similique?
-					</Text>
+					<Text style={styles.paragraph}>{data?.parrafo1}</Text>
+					<Text style={styles.paragraph}>{data?.parrafo2}</Text>
 					<Text style={styles.paragraph}>
 						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati
 						similique quis possimus odit tempora consequatur in, asperiores unde
