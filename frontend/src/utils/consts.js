@@ -47,6 +47,69 @@ export const PLAZA_INPUTS = [
 	},
 ];
 
+export const INFO_PLAZA_INPUTS = [
+	{
+		id: 'idAccountNumber',
+		name: 'accountNumber',
+		label: 'N° de Cuenta',
+		type: 'number',
+	},
+	{
+		id: 'idIbanKey',
+		name: 'ibanKey',
+		label: 'Clave Interbancaria',
+	},
+	{
+		id: 'idBankName',
+		name: 'bankName',
+		label: 'Banco',
+	},
+	{
+		id: 'idIsSociety',
+		label: '¿Es una sociedad?',
+		type: 'switch',
+	},
+	{
+		id: 'idBusinessName',
+		name: 'businessName',
+		label: 'Razón o Denominación',
+	},
+	{
+		id: 'idDeedNumber',
+		name: 'deedNumber',
+		label: 'N° de Escritura',
+		type: 'number',
+	},
+	{
+		id: 'idDeedDate',
+		name: 'deedDate',
+		label: 'Fecha de Escritura',
+		type: 'date',
+	},
+	{
+		id: 'idNotaryOfficeNumber',
+		name: 'notaryOfficeNumber',
+		label: 'N° de Notaría',
+		type: 'number',
+	},
+	{
+		id: 'idNotaryOfficeCity',
+		name: 'notaryOfficeCity',
+		label: 'Ciudad de la Notaría',
+	},
+	{
+		id: 'idMerchInvoice',
+		name: 'merchInvoice',
+		label: 'Folio Mercantil',
+		type: 'number',
+	},
+	{
+		id: 'idIsSignerAuthorized',
+		label: '¿El firmante está facultado en este instrumento?',
+		type: 'switch',
+	},
+];
+
 export const STORE_INPUTS = [
 	{
 		id: 'idName',

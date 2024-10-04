@@ -4,6 +4,7 @@ import PlazasContext from './PlazasContext';
 const PlazasProvider = ({ children }) => {
 	const [plazas, setPlazas] = useState([]);
 	const [plaza, setPlaza] = useState({});
+	const [plazaToEdit, setPlazaToEdit] = useState({});
 	const [stores, setStores] = useState([]);
 	const [store, setStore] = useState({});
 
@@ -20,6 +21,8 @@ const PlazasProvider = ({ children }) => {
 		setPlazas,
 		plaza,
 		setPlaza,
+		plazaToEdit,
+		setPlazaToEdit,
 		stores,
 		setStores,
 		store,

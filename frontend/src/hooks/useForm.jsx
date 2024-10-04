@@ -7,7 +7,7 @@ import {
 	addUserTenant,
 	updateUserTenant,
 } from '../services/userServices';
-import { addPlaza, addStore } from '../services/plazasService';
+import { addInfoPlaza, addPlaza, addStore } from '../services/plazasService';
 import { uploadDocument } from '../services/documentServices';
 import useUiContext from './useUiContext';
 import useAuthContext from './useAuthContext';
@@ -22,6 +22,7 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 
 	useEffect(() => {
 		if (dataToEdit) {
+			console.log(dataToEdit);
 			setForm({
 				...initialForm,
 				...dataToEdit,
@@ -144,6 +145,24 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 		}
 	};
 
+	const handleSubmitPlazaInfo = async (options, plazaId) => {
+		try {
+			setLoading(true);
+			const plazaInfo = { ...form, ...options };
+			await addInfoPlaza(plazaInfo, plazaId);
+			hideModal();
+			console.log(
+				`Información ${
+					dataToEdit?.accountNumber ? 'actualizada' : 'agregada'
+				} con éxito!`
+			);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const handleSubmitPassword = async event => {
 		event.preventDefault();
 		try {
@@ -186,6 +205,7 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 		handleSubmitPlaza,
 		handleSubmitStore,
 		handleSubmitContactInfo,
+		handleSubmitPlazaInfo,
 		handleSubmitUserTenant,
 		handleSubmitPassword,
 		handleSubmitDocument,

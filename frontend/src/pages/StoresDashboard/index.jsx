@@ -7,11 +7,15 @@ import useUsersContext from '../../hooks/useUsersContext';
 import usePlazasContext from '../../hooks/usePlazasContext';
 import { getOnePlaza, getStores } from '../../services/plazasService';
 import useUiContext from '../../hooks/useUiContext';
+import { Button } from 'react-bootstrap';
+import PlazaInfo from '../../components/data/PlazaInfo';
+import InfoPlazaForm from '../../components/forms/InfoPlazaForm';
 const StoresDashboard = () => {
 	const { plazaId } = useParams();
 	const { showModal } = useUiContext();
 	const { userAdmin } = useUsersContext();
-	const { plaza, setPlaza, stores, setStores, setStore } = usePlazasContext();
+	const { plaza, setPlaza, setPlazaToEdit, stores, setStores, setStore } =
+		usePlazasContext();
 
 	const fetchPlaza = async () => {
 		const res = await getOnePlaza(plazaId);
@@ -36,13 +40,28 @@ const StoresDashboard = () => {
 		});
 	};
 
+	const handleAddInfoPlaza = () => {
+		const { bankInfo, adminInfo } = plaza;
+		setPlazaToEdit({ ...bankInfo, ...adminInfo });
+		showModal({
+			title: 'Información de la plaza',
+			children: <InfoPlazaForm fetchPlaza={() => fetchPlaza(plazaId)} />,
+		});
+	};
+
 	return (
 		<section className='px-4 py-2 text-primary'>
-			<h4 className='d-flex align-items-center px-4 mb-3 fw-bold'>
-				<MdAdminPanelSettings size={30} /> {userAdmin.name}{' '}
-				<FaChevronCircleRight className='mx-3' />
-				{plaza.name}
-			</h4>
+			<div className='px-4 mb-4'>
+				<h4 className='d-flex align-items-center mb-4 fw-bold'>
+					<MdAdminPanelSettings size={30} /> {userAdmin.name}{' '}
+					<FaChevronCircleRight className='mx-3' />
+					{plaza.name}
+				</h4>
+				<Button onClick={handleAddInfoPlaza}>
+					{plaza?.bankInfo ? 'Editar' : 'Agregar'} info adicional de la plaza
+				</Button>
+				<PlazaInfo plaza={plaza} />
+			</div>
 			<StoresGrid data={stores} onClick={handleAddStore} />
 		</section>
 	);
