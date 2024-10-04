@@ -22,7 +22,6 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 
 	useEffect(() => {
 		if (dataToEdit) {
-			console.log(dataToEdit);
 			setForm({
 				...initialForm,
 				...dataToEdit,

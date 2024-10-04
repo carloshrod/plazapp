@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import { INFO_PLAZA_INPUTS } from '../../../utils/consts';
+import { ADMIN_INFO_INPUTS, BANK_INFO_INPUTS } from '../../../utils/consts';
 import SubmitButton from '../../ui/SubmitButton';
 import { useState } from 'react';
 import useForm from '../../../hooks/useForm';
@@ -9,6 +9,8 @@ const initialForm = {
 	accountNumber: '',
 	ibanKey: '',
 	bankName: '',
+	name: '',
+	rfc: '',
 	businessName: '',
 	deedNumber: '',
 	deedDate: '',
@@ -41,12 +43,30 @@ const InfoPlazaForm = ({ fetchPlaza }) => {
 		}
 	};
 
-	const endSlice = isSociety ? undefined : 4;
+	const filteredInputs = [...ADMIN_INFO_INPUTS];
+
+	if (isSociety) {
+		filteredInputs.splice(1, 2);
+	} else {
+		filteredInputs.splice(3);
+	}
 
 	return (
 		<Form className='p-4 bg-white shadow rounded' onSubmit={handleSubmit}>
 			<h4 className='mb-4 text-primary'>{plaza?.name}</h4>
-			{INFO_PLAZA_INPUTS.slice(0, endSlice).map(({ id, name, label, type }) =>
+			{BANK_INFO_INPUTS.map(({ id, name, label, type }) => (
+				<Form.Group key={id} className='mb-4' controlId={id}>
+					<Form.Label className='fw-semibold'>{label}</Form.Label>
+					<Form.Control
+						name={name}
+						type={type ?? 'text'}
+						value={form[name] || ''}
+						onChange={handleChange}
+						required
+					/>
+				</Form.Group>
+			))}
+			{filteredInputs.map(({ id, name, label, type }) =>
 				type !== 'switch' ? (
 					<Form.Group key={id} className='mb-4' controlId={id}>
 						<Form.Label className='fw-semibold'>{label}</Form.Label>

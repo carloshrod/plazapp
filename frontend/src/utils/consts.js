@@ -47,7 +47,7 @@ export const PLAZA_INPUTS = [
 	},
 ];
 
-export const INFO_PLAZA_INPUTS = [
+export const BANK_INFO_INPUTS = [
 	{
 		id: 'idAccountNumber',
 		name: 'accountNumber',
@@ -64,10 +64,23 @@ export const INFO_PLAZA_INPUTS = [
 		name: 'bankName',
 		label: 'Banco',
 	},
+];
+
+export const ADMIN_INFO_INPUTS = [
 	{
 		id: 'idIsSociety',
 		label: '¿Es una sociedad?',
 		type: 'switch',
+	},
+	{
+		id: 'idName',
+		name: 'name',
+		label: 'Nombre',
+	},
+	{
+		id: 'idRfc',
+		name: 'rfc',
+		label: 'RFC',
 	},
 	{
 		id: 'idBusinessName',

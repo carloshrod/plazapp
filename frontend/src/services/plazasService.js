@@ -72,21 +72,31 @@ export const getOnePlaza = async plazaId => {
 export const addInfoPlaza = async (plazaInfo, plazaId) => {
 	try {
 		const { accountNumber, ibanKey, bankName, ...rest } = plazaInfo;
+		const {
+			name,
+			rfc,
+			businessName,
+			deedNumber,
+			deedDate,
+			notaryOfficeNumber,
+			notaryOfficeCity,
+			merchInvoice,
+		} = rest;
 		const bankInfo = { accountNumber, ibanKey, bankName };
 		const adminInfo = { ...rest };
 		const isSociety = adminInfo?.isSociety;
 
-		const adminInfoData = isSociety
-			? adminInfo
+		const adminInfoData = !isSociety
+			? { isSociety, name, rfc }
 			: {
 					isSociety,
-					businessName: '',
-					deedNumber: '',
-					deedDate: '',
-					notaryOfficeNumber: '',
-					notaryOfficeCity: '',
-					merchInvoice: '',
-					isSignerAuthorized: false,
+					businessName,
+					deedNumber,
+					deedDate,
+					notaryOfficeNumber,
+					notaryOfficeCity,
+					merchInvoice,
+					isSignerAuthorized: adminInfo?.isSignerAuthorized,
 			  };
 
 		const plazaDocRef = doc(db, 'plazas', plazaId);
