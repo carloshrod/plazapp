@@ -17,7 +17,8 @@ import axios from 'axios';
 import { env } from '../config/env';
 
 const usersCollectionRef = collection(db, 'users');
-const { REGISTER_USER_ENDPOINT, UPDATE_USER_ENDPOINT } = env;
+const { REGISTER_USER_ENDPOINT, UPDATE_USER_ENDPOINT, DISABLE_USER_ENDPOINT } =
+	env;
 
 export const addUserAdmin = async user => {
 	try {
@@ -71,7 +72,7 @@ export const getOneUser = async userId => {
 	}
 };
 
-export const addUserTenant = async (user, storeId) => {
+export const addUserTenant = async (user, adminId, storeId) => {
 	try {
 		const res = await axios.post(REGISTER_USER_ENDPOINT, user);
 		const { uid } = res.data;
@@ -80,6 +81,7 @@ export const addUserTenant = async (user, storeId) => {
 			...user,
 			id: uid,
 			role: 'tenant',
+			adminId,
 			storeId,
 			notifDays: [],
 			disabled: false,
@@ -193,6 +195,44 @@ export const acceptTerms = async userId => {
 			termsAccepted: true,
 			lastUpdate: serverTimestamp(),
 		});
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const toggleDisableUserAdmin = async userAdminId => {
+	try {
+		const { email, name, disabled } = await getOneUser(userAdminId);
+
+		const res = await axios.patch(
+			`${DISABLE_USER_ENDPOINT}?userId=${userAdminId}`,
+			{ email, name, disabled: !disabled }
+		);
+
+		if (res?.status === 200) {
+			const userAdminDocRef = doc(db, 'users', userAdminId);
+
+			await updateDoc(userAdminDocRef, {
+				disabled: !disabled,
+				lastUpdate: serverTimestamp(),
+			});
+
+			const q = query(usersCollectionRef, where('adminId', '==', userAdminId));
+			const userTenants = await fetchData(q);
+
+			if (userTenants?.length > 0) {
+				for (const user of userTenants) {
+					const userTenantDocRef = doc(db, 'users', user.id);
+
+					await updateDoc(userTenantDocRef, {
+						disabled: !disabled,
+						lastUpdate: serverTimestamp(),
+					});
+				}
+			}
+
+			console.log(res?.data?.message);
+		}
 	} catch (error) {
 		console.error(error);
 	}

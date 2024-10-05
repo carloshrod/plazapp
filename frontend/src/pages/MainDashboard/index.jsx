@@ -1,11 +1,9 @@
 import { UserForm } from '../../components';
 import { UsersGrid } from '../../components';
 import useUiContext from '../../hooks/useUiContext';
-import useUsersContext from '../../hooks/useUsersContext';
 
 const MainDashboard = () => {
 	const { showModal } = useUiContext();
-	const { userAdmins } = useUsersContext();
 
 	const handleAddUserAdmin = () => {
 		showModal({
@@ -16,7 +14,7 @@ const MainDashboard = () => {
 
 	return (
 		<section className='p-4 text-primary'>
-			<UsersGrid data={userAdmins} onClick={handleAddUserAdmin} />
+			<UsersGrid onClick={handleAddUserAdmin} />
 		</section>
 	);
 };

@@ -23,6 +23,7 @@ const UsersProvider = ({ children }) => {
 
 	const data = {
 		userAdmins,
+		setUserAdmins,
 		dispatchUserAdmins,
 		userAdmin,
 		setUserAdmin,

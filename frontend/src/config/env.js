@@ -8,4 +8,7 @@ export const env = {
 	UPDATE_USER_ENDPOINT: isProduction
 		? import.meta.env.VITE_API_UPDATE_USER_ENDPOINT
 		: `${BASE_URL}/updateUser`,
+	DISABLE_USER_ENDPOINT: isProduction
+		? import.meta.env.VITE_API_UPDATE_USER_ENDPOINT
+		: `${BASE_URL}/toggleDisableUser`,
 };
