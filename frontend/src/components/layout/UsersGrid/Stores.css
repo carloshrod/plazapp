@@ -1,9 +1,0 @@
-.store-card {
-  height: 10rem !important;
-  cursor: pointer;
-  box-shadow: 2px 2px 8px #87CEEB;
-}
-
-.store-card:hover {
-  transform: translateY(-3px);
-}

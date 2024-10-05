@@ -7,6 +7,7 @@
 body,
 html {
   min-height: 100vh;
+  min-width: 320px;
 }
 
 button {
@@ -147,4 +148,13 @@ a {
 .form-check-input:checked {
   background-color: #198754 !important;
   border-color: #198754 !important;
+}
+
+.store-card {
+  min-height: 150px;
+  box-shadow: 2px 2px 8px #87CEEB;
+}
+
+.store-card:hover {
+  transform: translateY(-3px);
 }
