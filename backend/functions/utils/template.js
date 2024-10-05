@@ -155,3 +155,58 @@ export const accountUpdated = (user) => {
   </html>
       `;
 };
+
+export const accountToggleDisabled = (user) => {
+  const { displayName, disabled } = user;
+  const action = disabled
+    ? "deshabilitada. Por favor, comuníquese con su administrador"
+    : "habilitada. Puede seguir haciendo uso de esta normalmente";
+
+  return `
+        <!DOCTYPE html>
+        <html lang="es">
+    
+        <head>
+            <meta charset="UTF-8">
+            <title>Notificación</title>
+            <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            }
+    
+            .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            }
+    
+            h3 {
+            margin-bottom: 2rem;
+            }
+    
+            .content {
+            margin-bottom: 2rem;
+            }
+    
+            .description {
+            font-weight: 600;
+            font-style: italic;
+            }
+        </style>
+        </head>
+    
+        <body>
+        <div class="container">
+            <h3>Señor(a) ${displayName},</h3>
+            <section class="content">
+            <p>Su cuenta ha sido ${action}.</p>
+            <p>Cordialmente,</p>
+            <p>El equipo de Plazapp</p>
+        </div>
+        </body>
+    </html>
+        `;
+};
