@@ -12,6 +12,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 const TenantInfo = () => {
 	const { showModal } = useUiContext();
 	const { userTenant, setUserToEdit } = useUsersContext();
+	const { plaza } = usePlazasContext(); // Obtener la plaza para pasarla al PDFDocument por props
 	const { store } = usePlazasContext();
 	const [docType, setDocType] = useState('');
 
@@ -111,7 +112,13 @@ const TenantInfo = () => {
 				>
 					<PDFDownloadLink
 						// document={TEMPLATES[docType]}
-						document={<PDFDocument docType={docType} userTenant={userTenant} />}
+						document={
+							<PDFDocument
+								docType={docType}
+								userTenant={userTenant}
+								plaza={plaza}
+							/>
+						}
 						fileName={`${docType}.pdf`}
 						className='text-white'
 					>

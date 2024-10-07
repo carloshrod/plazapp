@@ -46,8 +46,10 @@ const INFO_DATA = {
 	},
 };
 
-const PDFDocument = ({ docType, userTenant }) => {
+const PDFDocument = ({ docType, userTenant, plaza }) => {
 	const data = INFO_DATA[docType] ?? {};
+
+	console.log(plaza);
 
 	return (
 		<Document>
@@ -57,9 +59,10 @@ const PDFDocument = ({ docType, userTenant }) => {
 				<View style={styles.section}>
 					<Text style={styles.title}>Entre las partes</Text>
 					<Text style={styles.paragraph}>
-						Este contrato es celebrado entre {userTenant?.name}, con domicilio
-						en {userTenant?.address}, en adelante El Cliente, y Alberto Medina,
-						con domicilio en Calle 123, en adelante El Administrador.
+						Este contrato es celebrado entre {plaza?.bankInfo.bankName}, con
+						domicilio en {userTenant?.address}, en adelante El Cliente, y
+						Alberto Medina, con domicilio en Calle 123, en adelante El
+						Administrador.
 					</Text>
 				</View>
 

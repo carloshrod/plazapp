@@ -47,6 +47,14 @@ const PlazaInfo = ({ plaza }) => {
 							<span className='fw-bold'>N° de Escritura: </span>
 							{plaza?.adminInfo?.deedNumber}
 						</span>
+						<span>
+							<span className='fw-bold'>N° de Notaría: </span>
+							{plaza?.adminInfo?.notaryOfficeNumber}
+						</span>
+						<span>
+							<span className='fw-bold'>Ciudad de Notaría: </span>
+							{plaza?.adminInfo?.notaryOfficeCity}
+						</span>
 					</>
 				)}
 			</div>
