@@ -22,7 +22,7 @@ const Header = () => {
 		<Navbar className='bg-body-tertiary'>
 			<Container>
 				<Link to='/admin-panel'>
-					<Navbar.Brand className='fs-1 text-primary fw-light'>
+					<Navbar.Brand className='logo text-primary fw-light'>
 						PLAZ<span className='fw-bold'>APP</span>
 					</Navbar.Brand>
 				</Link>
@@ -30,10 +30,10 @@ const Header = () => {
 					<Navbar.Text className='d-flex align-items-center fs-5'>
 						<Button
 							variant='light'
-							className='text-primary'
+							className='d-flex align-items-center text-primary'
 							onClick={handleDrawer}
 						>
-							{loggedUser?.email}
+							<span className='d-none d-sm-block'>{loggedUser?.email}</span>
 							<BsFillPersonFill size={30} />
 						</Button>
 					</Navbar.Text>
