@@ -59,7 +59,7 @@ const PDFDocument = ({ docType, userTenant, plaza }) => {
 				<View style={styles.section}>
 					<Text style={styles.title}>Entre las partes</Text>
 					<Text style={styles.paragraph}>
-						Este contrato es celebrado entre {plaza?.bankInfo.bankName}, con
+						Este contrato es celebrado entre {plaza?.adminInfo?.name}, con
 						domicilio en {userTenant?.address}, en adelante El Cliente, y
 						Alberto Medina, con domicilio en Calle 123, en adelante El
 						Administrador.
