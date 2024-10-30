@@ -5,6 +5,7 @@ import {
   accountToggleDisabled,
   accountUpdated,
   notification,
+  terminationNotice,
 } from "./template.js";
 
 const { EMAIL } = env;
@@ -73,6 +74,22 @@ export const sendNotificationMail = (email) => {
       to: email,
       subject: "Notificación Diaria - Plazapp",
       html: notification,
+    };
+
+    sendMail(mailOptions);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// ********** Notificaciones de término de contrato **********
+export const sendTerminationNotice = (data) => {
+  try {
+    const mailOptions = {
+      from: `"Admin" ${EMAIL}`,
+      to: data.email,
+      subject: "Notificación de Término de Contrato - Plazapp",
+      html: terminationNotice(data),
     };
 
     sendMail(mailOptions);

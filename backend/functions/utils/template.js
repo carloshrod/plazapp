@@ -210,3 +210,63 @@ export const accountToggleDisabled = (user) => {
     </html>
         `;
 };
+
+// ********** Notificaciones de término de contrato **********
+export const terminationNotice = (data) => {
+  const { tenantName, endDate, daysLeft, isTenant = false } = data;
+  const recipient = isTenant ? tenantName : "Administrador";
+  const endsIn =
+    daysLeft === 0 ? "el día de hoy" : `dentro de ${daysLeft} días`;
+  const action = isTenant
+    ? `Su contrato vence <strong>${endsIn}</strong>. Por favor comuníquese con su administrador.`
+    : `El contrato de <strong>${tenantName}</strong> vence <strong>${endsIn}</strong>.`;
+
+  return `
+        <!DOCTYPE html>
+        <html lang="es">
+    
+        <head>
+            <meta charset="UTF-8">
+            <title>Notificación</title>
+            <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            }
+    
+            .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            }
+    
+            h3 {
+            margin-bottom: 2rem;
+            }
+    
+            .content {
+            margin-bottom: 2rem;
+            }
+    
+            .description {
+            font-weight: 600;
+            font-style: italic;
+            }
+        </style>
+        </head>
+    
+        <body>
+        <div class="container">
+            <h3>Señor(a) ${recipient},</h3>
+            <section class="content">
+            <p>${action}</p>
+            <p class="description">Fecha de terminación del contrato: ${endDate}</p>
+            <p>Cordialmente,</p>
+            <p>El equipo de Plazapp</p>
+        </div>
+        </body>
+    </html>
+        `;
+};
