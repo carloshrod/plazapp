@@ -183,7 +183,7 @@ const useForm = (initialForm, dataToEdit = undefined) => {
 				userId,
 				file,
 				docName: form.docName,
-				docType: form.docType,
+				docType: form.docType ?? 'lessor',
 			});
 			hideModal();
 		} catch (error) {

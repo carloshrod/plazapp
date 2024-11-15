@@ -11,18 +11,25 @@ import {
 import useUsersContext from '../../../hooks/useUsersContext';
 import useAuthContext from '../../../hooks/useAuthContext';
 
-const Documents = () => {
+const StoreDocs = () => {
 	const { showModal } = useUiContext();
-	const [activeSection, setActiveSection] = useState('general');
 	const { loggedUser } = useAuthContext();
 	const { userTenant } = useUsersContext();
 	const [docs, setDocs] = useState([]);
 	const [allowDeleteDocs, setAllowDeleteDocs] = useState([]);
 
 	const isTenant = loggedUser && loggedUser?.role === 'tenant';
-	const userId = isTenant ? loggedUser?.id : userTenant?.id;
-	const allowDelete = allowDeleteDocs?.includes(activeSection);
+	const defaultActiveKey = isTenant ? 'lessor' : 'general';
+	const [activeSection, setActiveSection] = useState(defaultActiveKey);
 
+	const isLessor = activeSection === 'lessor';
+	const userId = isLessor
+		? loggedUser?.adminId
+		: isTenant
+		? loggedUser?.id
+		: userTenant?.id;
+
+	const allowDelete = allowDeleteDocs?.includes(activeSection);
 	const [isSwitchOn, setIsSwitchOn] = useState(allowDelete);
 
 	useEffect(() => {
@@ -74,10 +81,10 @@ const Documents = () => {
 				<div className='d-flex flex-column flex-grow-1 gap-3'>
 					<Nav
 						variant='tabs'
-						defaultActiveKey='general'
+						defaultActiveKey={defaultActiveKey}
 						onSelect={handleSelect}
 					>
-						{DOC_TYPES.map(({ value, label }) => (
+						{DOC_TYPES.slice(isTenant ? 0 : 1).map(({ value, label }) => (
 							<Nav.Item key={value}>
 								<Nav.Link eventKey={value}>{label}</Nav.Link>
 							</Nav.Item>
@@ -129,4 +136,4 @@ const Documents = () => {
 	);
 };
 
-export default Documents;
+export default StoreDocs;

@@ -2,7 +2,7 @@ import { UserForm } from '../../components';
 import { UsersGrid } from '../../components';
 import useUiContext from '../../hooks/useUiContext';
 
-const MainDashboard = () => {
+const Main = () => {
 	const { showModal } = useUiContext();
 
 	const handleAddUserAdmin = () => {
@@ -19,4 +19,4 @@ const MainDashboard = () => {
 	);
 };
 
-export default MainDashboard;
+export default Main;

@@ -6,13 +6,7 @@ import {
 } from 'react-router-dom';
 import UiProvider from './contexts/ui/UiProvider';
 import { PublicRoutes, PrivateRoutes } from './components';
-import {
-	Login,
-	MainDashboard,
-	PlazasDashboard,
-	Store,
-	StoresDashboard,
-} from './pages';
+import { Admin, Login, Main, Plaza, Store } from './pages';
 import { PATHS } from './utils/paths';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -33,14 +27,11 @@ function App() {
 						<Route path={LOGIN} element={<Login />} />
 					</Route>
 					<Route path={SUPERADMIN} element={<PrivateRoutes />}>
-						<Route
-							index
-							element={role === 'superadmin' ? <MainDashboard /> : null}
-						/>
+						<Route index element={role === 'superadmin' ? <Main /> : null} />
 						{role !== 'tenant' ? (
 							<>
-								<Route path={ADMIN} element={<PlazasDashboard />} />
-								<Route path={STORES} element={<StoresDashboard />} />
+								<Route path={ADMIN} element={<Admin />} />
+								<Route path={STORES} element={<Plaza />} />
 								<Route path={STORE} element={<Store />} />
 							</>
 						) : (

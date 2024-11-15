@@ -8,7 +8,7 @@ import { getOneStore } from '../../services/plazasService';
 import { useEffect, useState } from 'react';
 import {
 	CustomCalendar,
-	Documents,
+	StoreDocs,
 	TenantInfo,
 	UserForm,
 } from '../../components';
@@ -83,7 +83,7 @@ const Store = () => {
 						)}
 					</div>
 					{loggedUser.role !== 'tenant' ? <TenantInfo /> : null}
-					{userTenant?.email ? <Documents /> : null}
+					{userTenant?.email ? <StoreDocs /> : null}
 				</div>
 			) : (
 				<CustomCalendar storeName={store.name} />

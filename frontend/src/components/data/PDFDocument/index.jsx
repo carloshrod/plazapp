@@ -49,8 +49,6 @@ const INFO_DATA = {
 const PDFDocument = ({ docType, userTenant, plaza }) => {
 	const data = INFO_DATA[docType] ?? {};
 
-	console.log(plaza);
-
 	return (
 		<Document>
 			<Page style={styles.page}>

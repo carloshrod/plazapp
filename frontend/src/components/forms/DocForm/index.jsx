@@ -31,11 +31,14 @@ const DocForm = ({ getDocs }) => {
 		await getDocs();
 	};
 
+	const isFormOk =
+		Boolean(form.docType) && Boolean(form.docName) && Boolean(file);
+
 	return (
 		<Form className='p-3' onSubmit={handleSubmit}>
 			{DOCUMENT_INPUTS.map(({ id, name, label, optionDefault, options }) => {
 				const selectOptions = options
-					? options
+					? options.slice(1)
 					: !form.docType
 					? []
 					: form.docType === 'general'
@@ -78,7 +81,7 @@ const DocForm = ({ getDocs }) => {
 					Cargar documento
 				</span>
 			)}
-			<SubmitButton label='SUBIR' loading={loading} />
+			<SubmitButton label='SUBIR' loading={loading} isFormOk={isFormOk} />
 		</Form>
 	);
 };

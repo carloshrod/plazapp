@@ -1,12 +1,12 @@
 import { Button, Spinner } from 'react-bootstrap';
 
-const SubmitButton = ({ label, loading }) => {
+const SubmitButton = ({ label, loading, isFormOk = true }) => {
 	return (
 		<Button
 			className='w-100 fw-bold'
 			variant='primary'
 			type='submit'
-			disabled={loading}
+			disabled={!isFormOk || loading}
 		>
 			{!loading ? (
 				label

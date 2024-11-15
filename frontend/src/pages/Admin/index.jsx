@@ -8,7 +8,7 @@ import { getOneUser } from '../../services/userServices';
 import { getPlazas } from '../../services/plazasService';
 import usePlazasContext from '../../hooks/usePlazasContext';
 
-const PlazasDashboard = () => {
+const Admin = () => {
 	const { adminId } = useParams();
 	const { showModal } = useUiContext();
 	const { userAdmin, setUserAdmin } = useUsersContext();
@@ -46,4 +46,4 @@ const PlazasDashboard = () => {
 	);
 };
 
-export default PlazasDashboard;
+export default Admin;

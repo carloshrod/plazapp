@@ -7,10 +7,12 @@ import useUsersContext from '../../hooks/useUsersContext';
 import usePlazasContext from '../../hooks/usePlazasContext';
 import { getOnePlaza, getStores } from '../../services/plazasService';
 import useUiContext from '../../hooks/useUiContext';
-import { Button } from 'react-bootstrap';
+import { Button, Tab, Tabs } from 'react-bootstrap';
 import PlazaInfo from '../../components/data/PlazaInfo';
 import InfoPlazaForm from '../../components/forms/InfoPlazaForm';
-const StoresDashboard = () => {
+import PlazaDocs from '../../components/data/PlazaDocs';
+
+const Plaza = () => {
 	const { plazaId } = useParams();
 	const { showModal } = useUiContext();
 	const { userAdmin } = useUsersContext();
@@ -49,6 +51,19 @@ const StoresDashboard = () => {
 		});
 	};
 
+	const TAB_ITEMS = [
+		{
+			value: 'stores',
+			label: 'Locales',
+			component: <StoresGrid data={stores} onClick={handleAddStore} />,
+		},
+		{
+			value: 'docs',
+			label: 'Documentos',
+			component: <PlazaDocs adminId={plaza?.adminId} />,
+		},
+	];
+
 	return (
 		<section className='px-4 py-2 text-primary'>
 			<div className='px-4 mb-4'>
@@ -62,9 +77,19 @@ const StoresDashboard = () => {
 				</Button>
 				<PlazaInfo plaza={plaza} />
 			</div>
-			<StoresGrid data={stores} onClick={handleAddStore} />
+
+			{/* Tabs */}
+			<div className='bg-secondary p-2 pb-1 rounded'>
+				<Tabs defaultActiveKey='stores' id='plaza-tabs' className='mb-3'>
+					{TAB_ITEMS.map(({ value, label, component }) => (
+						<Tab key={value} eventKey={value} title={label}>
+							{component}
+						</Tab>
+					))}
+				</Tabs>
+			</div>
 		</section>
 	);
 };
 
-export default StoresDashboard;
+export default Plaza;

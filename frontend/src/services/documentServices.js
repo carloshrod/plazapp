@@ -21,6 +21,19 @@ import { GEN_DOCS_DICTIONARY, MONTHS_DICTIONARY } from '../utils/consts';
 
 export const uploadDocument = async ({ userId, file, docName, docType }) => {
 	try {
+		if (!file) throw new Error(`No hay archivo para procesar.`);
+
+		const fileData = await generateDocFileData({ file, docType });
+		if (!fileData) throw new Error(`No fue posible procesar el archivo`);
+
+		const docIndex =
+			docType === 'general' || docType === 'lessor'
+				? GEN_DOCS_DICTIONARY[docName]
+				: MONTHS_DICTIONARY[docName];
+		if (!docIndex)
+			throw new Error('No fue posible generar el index del subdocumento');
+
+		// Colección
 		const documentsCollectionRef = collection(db, 'documents');
 
 		const q = query(documentsCollectionRef, where('userId', '==', userId));
@@ -30,11 +43,12 @@ export const uploadDocument = async ({ userId, file, docName, docType }) => {
 		if (!querySnapshot.empty) {
 			docRef = querySnapshot.docs[0].ref;
 		} else {
+			console.log('Agregando nuevo doc');
 			docRef = await addDoc(documentsCollectionRef, {
 				userId,
 				allowDeleteDocs: [],
 			});
-			console.log(`Nuevo documento creado con ID: ${docRef.id}`);
+			console.log(`Documento creado con ID: ${docRef.id}`);
 		}
 
 		// Subcolección
@@ -54,19 +68,6 @@ export const uploadDocument = async ({ userId, file, docName, docType }) => {
 		const newDocRef = doc(documentsSubcollectionRef);
 		const docId = newDocRef.id;
 
-		let fileData;
-		if (file) {
-			fileData = await generateDocFileData({ file, docType });
-		} else {
-			console.error(`Error: No hay archivo para procesar.`);
-			return;
-		}
-
-		const docIndex =
-			docType === 'general'
-				? GEN_DOCS_DICTIONARY[docName]
-				: MONTHS_DICTIONARY[docName];
-
 		await setDoc(
 			newDocRef,
 			{
@@ -79,7 +80,7 @@ export const uploadDocument = async ({ userId, file, docName, docType }) => {
 			{ merge: true }
 		);
 
-		console.log(`Documento creado con ID: ${docId}`);
+		console.log(`Subdocumento creado con ID: ${docId}`);
 	} catch (error) {
 		console.error('Error creating or updating document:', error);
 	}

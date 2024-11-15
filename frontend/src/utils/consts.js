@@ -191,6 +191,10 @@ export const PASSWORD_INPUTS = [
 
 export const DOC_TYPES = [
 	{
+		value: 'lessor',
+		label: 'Arrendador',
+	},
+	{
 		value: 'general',
 		label: 'Generales',
 	},
@@ -330,6 +334,15 @@ export const MONTHLY_DOCS_OPTIONS = [
 	},
 ];
 
+export const LESSOR_DOCS_OPTIONS = [
+	{ value: 'Doc Arrendador 1', label: 'Doc Arrendador 1' },
+	{ value: 'Doc Arrendador 2', label: 'Doc Arrendador 2' },
+	{ value: 'Doc Arrendador 3', label: 'Doc Arrendador 3' },
+	{ value: 'Doc Arrendador 4', label: 'Doc Arrendador 4' },
+	{ value: 'Doc Arrendador 5', label: 'Doc Arrendador 5' },
+	{ value: 'Doc Arrendador 6', label: 'Doc Arrendador 6' },
+];
+
 export const GEN_DOCS_DICTIONARY = {
 	'Documento 1': 1,
 	'Documento 2': 2,
@@ -343,6 +356,12 @@ export const GEN_DOCS_DICTIONARY = {
 	'Documento 10': 10,
 	'Documento 11': 11,
 	'Documento 12': 12,
+	'Doc Arrendador 1': 13,
+	'Doc Arrendador 2': 14,
+	'Doc Arrendador 3': 15,
+	'Doc Arrendador 4': 16,
+	'Doc Arrendador 5': 17,
+	'Doc Arrendador 6': 18,
 };
 
 export const MONTHS_DICTIONARY = {
