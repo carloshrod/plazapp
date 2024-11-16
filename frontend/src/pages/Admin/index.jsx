@@ -39,7 +39,7 @@ const Admin = () => {
 	return (
 		<section className='px-4 py-2 text-primary'>
 			<h4 className='d-flex align-items-center px-3 mb-3 fw-bold'>
-				<MdAdminPanelSettings size={30} /> {userAdmin.name}
+				<MdAdminPanelSettings size={30} /> {userAdmin?.name}
 			</h4>
 			<PlazasGrid data={plazas} onClick={handleAddPlaza} />
 		</section>
