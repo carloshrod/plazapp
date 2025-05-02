@@ -4,6 +4,7 @@ import {
   accountCreated,
   accountToggleDisabled,
   accountUpdated,
+  docNotification,
   notification,
   terminationNotice,
 } from "./template.js";
@@ -95,5 +96,22 @@ export const sendTerminationNotice = (data) => {
     sendMail(mailOptions);
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const sendDocNotif = (data) => {
+  try {
+    const { adminEmail, ...rest } = data;
+    const mailOptions = {
+      from: `"Admin" ${EMAIL}`,
+      to: adminEmail,
+      subject: "Documento Subido - Plazapp",
+      html: docNotification(rest),
+    };
+
+    sendMail(mailOptions);
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };

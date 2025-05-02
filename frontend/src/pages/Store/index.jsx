@@ -57,9 +57,9 @@ const Store = () => {
 			{userAdmin?.name ? (
 				<div className='d-flex justify-content-between align-items-center mb-3 px-4'>
 					<h4 className='d-flex align-items-center mb-0 fw-bold'>
-						<MdAdminPanelSettings size={30} /> {userAdmin.name}{' '}
+						<MdAdminPanelSettings size={30} /> {userAdmin?.name}{' '}
 						<FaChevronCircleRight className='mx-3' />
-						{plaza.name}
+						{plaza?.name}
 					</h4>
 					<Button onClick={() => setShowCalendar(!showCalendar)}>
 						{!showCalendar ? 'Calendario' : 'Volver'}
@@ -69,7 +69,7 @@ const Store = () => {
 			{!showCalendar ? (
 				<div className='bg-secondary p-4 rounded'>
 					<div className='d-flex justify-content-between align-items-center px-2'>
-						<h3 className='mb-0 fw-bold'>{store.name}</h3>
+						<h3 className='mb-0 fw-bold'>{store?.name}</h3>
 						{userTenant?.email ? (
 							<h4>{userTenant?.email}</h4>
 						) : (
@@ -82,11 +82,11 @@ const Store = () => {
 							</Button>
 						)}
 					</div>
-					{loggedUser.role !== 'tenant' ? <TenantInfo /> : null}
+					{loggedUser?.role !== 'tenant' ? <TenantInfo /> : null}
 					{userTenant?.email ? <StoreDocs /> : null}
 				</div>
 			) : (
-				<CustomCalendar storeName={store.name} />
+				<CustomCalendar storeName={store?.name} />
 			)}
 		</section>
 	);

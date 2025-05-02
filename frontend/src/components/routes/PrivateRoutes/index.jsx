@@ -45,12 +45,12 @@ const PrivateRoutes = () => {
 		return <Navigate to={LOGIN} replace />;
 	}
 
-	if (loggedUser.role === 'admin') {
+	if (loggedUser?.role === 'admin') {
 		initialRoute = ADMIN.replace(':adminId', loggedUser.id);
 		if (pathname === SUPERADMIN) {
 			return <Navigate to={initialRoute} replace />;
 		}
-	} else if (loggedUser.role === 'tenant') {
+	} else if (loggedUser?.role === 'tenant') {
 		initialRoute = TENANT.replace(':storeId', loggedUser.storeId);
 		if (pathname !== initialRoute) {
 			return <Navigate to={initialRoute} replace />;

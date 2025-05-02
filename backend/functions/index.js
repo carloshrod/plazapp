@@ -5,6 +5,7 @@ import cors from "cors";
 import serviceAccount from "./plazapp-credentials.json" assert { type: "json" };
 import { generatePassword } from "./utils/generatePassword.js";
 import {
+  sendDocNotif,
   sendNotificationMail,
   sendRegisterUserMail,
   sendTerminationNotice,
@@ -124,6 +125,25 @@ export const toggleDisableUser = onRequest(async (req, res) => {
         .json({ message: `Cuenta de Admin ${action} con éxito!` });
     } catch (error) {
       res.status(400).send(error.message);
+    }
+  });
+});
+
+export const sendDocNotification = onRequest(async (req, res) => {
+  return corsHandler(req, res, async () => {
+    if (req.method !== "POST") {
+      return res.status(405).json({ message: "Método no permitido" });
+    }
+
+    try {
+      sendDocNotif(req.body);
+
+      return res
+        .status(200)
+        .json({ message: "Notificación enviada con éxito" });
+    } catch (error) {
+      console.error(error);
+      res.status(400).json(error);
     }
   });
 });
